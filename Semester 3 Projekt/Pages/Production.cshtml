@@ -2,3 +2,44 @@
 @model Semester_3_Projekt.Pages.ProductionModel
 @{
 }
+<h1>Production Tab</h1>
+
+<style>
+	.grid-container {
+		display: grid;
+		grid-template-columns: auto auto;
+		background-color: #2196F3;
+	}
+
+	.grid-item {
+		background-color: rgba(255, 255, 255, 0.8);
+		border: 1px solid rgba(0, 0, 0, 0.8);
+		font-size: 30px;
+		text-align: center;
+	}
+</style>
+
+<!-- This part creates labels and textfields that updates when a key has been pressed. -->
+<div class="grid-container">
+
+	
+	<div class="grid-item"><label for="typeDropdown">Please select the type of beer to be produced:</label></div>
+	<div class="grid-item">
+	<select name="typeDropdown" id="typeDropdown">
+		<option value="item1">Item1</option>
+			<option value="item2">Item2</option>
+			<option value="item3">Item3</option>
+			<option value="item4">Item4</option>
+	</select>
+	</div>
+	<div class="grid-item"><label for="quantityInput">Please enter the quantity of beer to be produced: </label></div>
+	<div class="grid-item"><input type="number" id="quantityInput"></div>
+	<div class="grid-item"><label for="speedInput">Please enter machine's speed during this production:</label></div>
+	<div class="grid-item"><input type="number" id="speedInput"></div>
+</div>
+
+<br>
+<br>
+
+<!-- This part creates a button. -->
+<button id="setProductionButton">Set Production</button>

@@ -2,8 +2,6 @@
 @model Semester_3_Projekt.Pages.ProductionModel
 @{
 }
-<h1>Production Tab</h1>
-
 <style>
 	.grid-container {
 		display: grid;
@@ -17,7 +15,21 @@
 		font-size: 30px;
 		text-align: center;
 	}
+
+	.alertBar {
+		display: none;
+		background-color: #f44336;
+		color: white;
+		padding: 10px;
+		text-align: center;
+	}
 </style>
+
+<div class="alertBar" id="alertBar">
+	<p>Alert message goes here!</p>
+</div>
+
+<h1>Production Tab</h1>
 
 <!-- This part creates a form with labels and textfields that updates when a key has been pressed. -->
 <form id="productionForm">

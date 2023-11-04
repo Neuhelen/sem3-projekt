@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "gRw8q87PDWsA71KUXaSDvWEBr4tUoFPCTWhEgu9OQ+Gc+APkAHofuEqA9MDeFVIz21lLY7Yyn4PBedQnsdIvcg==",
+  "dgSpecHash": "wmV7lm0MrYtjfElkPGb9Xh9jTali585YA83jZnG/8Hx5YRA5U7ydN/WOeBOrmNHR7ddoQoZNllcuFS9vYMaYUQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\patri\\source\\repos\\sem3-projekt\\Semester 3 Projekt\\Semester 3 Projekt.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Diplomenginienør i softwareteknologi\\Semester 3 Project\\Website\\Semester 3 Projekt\\Semester 3 Projekt.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Defelion\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.24\\microsoft.windowsdesktop.app.ref.6.0.24.nupkg.sha512",
+    "C:\\Users\\Defelion\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.24\\microsoft.netcore.app.ref.6.0.24.nupkg.sha512",
+    "C:\\Users\\Defelion\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.24\\microsoft.aspnetcore.app.ref.6.0.24.nupkg.sha512",
+    "C:\\Users\\Defelion\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.24\\microsoft.netcore.app.host.win-x64.6.0.24.nupkg.sha512"
+  ],
   "logs": []
 }

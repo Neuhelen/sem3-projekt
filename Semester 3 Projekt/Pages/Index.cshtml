@@ -4,7 +4,87 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@*CSS*@
+<style>
+    h1 {
+        color: #333;
+    }
+
+    .heroContainer {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+    }
+
+        .heroContainer p {
+            margin-bottom: 30px;
+        }
+
+    .secondBox {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        max-width: 400px;
+    }
+
+    .secondBox > button {
+        border-radius: 3px;
+        cursor: pointer;
+
+    }
+
+    .startBtn {
+        background-color: green;
+        font-weight: bold;
+    }
+
+    .stopBtn {
+        background-color: red;
+        font-weight: bold;
+    }
+
+    .continueBtn {
+        background-color: coral;
+        font-weight: bold;
+    }
+
+</style>
+
+@*HTML*@
+
+<h1>Monitor tab</h1>
+
+
+<div class="heroContainer">
+
+    @*Dropdown for batch ID*@
+    <div class="dropDownBatch">
+        <label for="batch-id">Choose your batch ID:</label>
+        <select name="batch-id" id="batch-id">
+            <option value="1">Batch ID 1</option>
+            <option value="2">Batch ID 2</option>
+            <option value="3">Batch ID 3</option>
+        </select>
+       
+    </div>
+
+    @*Monitoring*@
+    <p>Type</p>
+    <p>Successfull/Failed Batch</p>
+    <p>Products Produced</p>
+    <p>Quantity</p>
+    <p>Successful Amount</p>
+    <p>Production Speed</p>
+    <p>Speed</p>
+    <p>Failed amount</p>
+
+
+    @*Start, stop, continue buttons*@
+    <div class="secondBox">
+        <button class="startBtn">Start</button>
+        <button class="stopBtn">Stop</button>
+        <button class="continueBtn">Continue</button>
+    </div>
+
 </div>
+

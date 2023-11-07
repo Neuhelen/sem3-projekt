@@ -1,5 +1,6 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "wmV7lm0MrYtjfElkPGb9Xh9jTali585YA83jZnG/8Hx5YRA5U7ydN/WOeBOrmNHR7ddoQoZNllcuFS9vYMaYUQ==",
   "success": true,
   "projectFilePath": "D:\\Diplomenginienør i softwareteknologi\\Semester 3 Project\\Website\\Semester 3 Projekt\\Semester 3 Projekt.csproj",
@@ -9,5 +10,11 @@
     "C:\\Users\\Defelion\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.24\\microsoft.aspnetcore.app.ref.6.0.24.nupkg.sha512",
     "C:\\Users\\Defelion\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.24\\microsoft.netcore.app.host.win-x64.6.0.24.nupkg.sha512"
   ],
+=======
+  "dgSpecHash": "1C2X55iC5zbg0DRDZY9A5PEaTluYLZebdEG6T1MeRzZm2n+Whk5w+r92MFo9Jg5GWtdlfKwUY4jj5W6CtZIaKA==",
+  "success": true,
+  "projectFilePath": "/Users/gokm8/Downloads/sem3-projekt/Semester 3 Projekt/Semester 3 Projekt.csproj",
+  "expectedPackageFiles": [],
+>>>>>>> Stashed changes
   "logs": []
 }

@@ -4,53 +4,10 @@
     ViewData["Title"] = "Home Page";
 }
 
-@*CSS*@
-<style>
-    h1 {
-        color: #333;
-    }
-
-    .heroContainer {
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-    }
-
-        .heroContainer p {
-            margin-bottom: 30px;
-        }
-
-    .secondBox {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 30px;
-        max-width: 400px;
-    }
-
-    .secondBox > button {
-        border-radius: 3px;
-        cursor: pointer;
-
-    }
-
-    .startBtn {
-        background-color: green;
-        font-weight: bold;
-    }
-
-    .stopBtn {
-        background-color: red;
-        font-weight: bold;
-    }
-
-    .continueBtn {
-        background-color: coral;
-        font-weight: bold;
-    }
-
-</style>
-
-@*HTML*@
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="Index.css">;
+</head>
 
 <h1>Monitor tab</h1>
 
@@ -59,24 +16,25 @@
 
     @*Dropdown for batch ID*@
     <div class="dropDownBatch">
-        <label for="batch-id">Choose your batch ID:</label>
+        <label for="batch-id">Batch ID:</label>
         <select name="batch-id" id="batch-id">
-            <option value="1">Batch ID 1</option>
-            <option value="2">Batch ID 2</option>
-            <option value="3">Batch ID 3</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
         </select>
-       
     </div>
-
+    
     @*Monitoring*@
-    <p>Type</p>
-    <p>Successfull/Failed Batch</p>
-    <p>Products Produced</p>
-    <p>Quantity</p>
-    <p>Successful Amount</p>
-    <p>Production Speed</p>
-    <p>Speed</p>
-    <p>Failed amount</p>
+    <div class="infoBoxes">
+        <div class="box">Type</div>
+        <div class="box">Successfull/Failed Batch</div>
+        <div class="box">Products Produced</div>
+        <div class="box">Quantity</div>
+        <div class="box">Successful Amount</div>
+        <div class="box">Production Speed</div>
+        <div class="box">Speed</div>
+        <div class="box">Failed amount</div>
+    </div>
 
 
     @*Start, stop, continue buttons*@

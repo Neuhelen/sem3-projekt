@@ -29,13 +29,13 @@ namespace Semester_3_Projekt.controller
             client.Connect();
         }
 
-        public Opc.UaFx.OpcValue common_get(String endpoint)
+        private Opc.UaFx.OpcValue common_get(String endpoint)
         {
             var res = client.ReadNode(this.BASEAPI + endpoint);
             return res;
         }
 
-        public bool common_post(String endpoint, object value)
+        private bool common_post(String endpoint, object value)
         {
             var res = client.WriteNode(this.BASEAPI + endpoint, value);
             if (res.IsGood)
@@ -47,7 +47,29 @@ namespace Semester_3_Projekt.controller
             }
         }
 
+        public float get_cur_mach_speed()
+        {
+            var mach_speed_value = common_get("Cube.Status.CurMachSpeed");
+            return (float) mach_speed_value.Value;
+        }
 
+        public int get_produced()
+        {
+            var produced_value = common_get("product.produced");
+            return (UInt16) produced_value.Value;
+        }
+
+        public int get_prodcued_bad()
+        {
+            var produced_bad_value = common_get("product.bad");
+            return (UInt16) produced_bad_value.Value;
+        }
+
+        public int get_prodcued_good()
+        {
+            var produced_good_value = common_get("product.good");
+            return (UInt16) produced_good_value.Value;
+        }
 
     }
 }

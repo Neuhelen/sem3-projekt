@@ -29,13 +29,13 @@ namespace Semester_3_Projekt.controller
             client.Connect();
         }
 
-        private Opc.UaFx.OpcValue common_get(String endpoint)
+        public Opc.UaFx.OpcValue common_get(String endpoint)
         {
             var res = client.ReadNode(this.BASEAPI + endpoint);
             return res;
         }
 
-        private bool common_post(String endpoint, object value)
+        public bool common_post(String endpoint, object value)
         {
             var res = client.WriteNode(this.BASEAPI + endpoint, value);
             if (res.IsGood)
@@ -69,6 +69,39 @@ namespace Semester_3_Projekt.controller
         {
             var produced_good_value = common_get("product.good");
             return (UInt16) produced_good_value.Value;
+        }
+        public int get_Current_State()
+        {
+            var current_state = common_get("Cube.Status.StateCurrent");
+            return (int) current_state.Value;
+        }
+        public int get_Control_Command()
+        {
+            var control_command = common_get("Cube.Command.CntrlCmd");
+            return (int) control_command.Value;
+        }
+
+        public bool get_Command_Change_Request()
+        {
+            var control_command = common_get("Cube.Command.CmdChangeRequest");
+            return (bool) control_command.Value;
+        }
+
+        public void stop()
+        {
+
+            common_post("Cube.Command.PackMLCmd", 3);
+
+            common_post("Cube.Command.CmdChangeRequest", true);
+        }
+
+        public void ingredientStop()
+        {
+
+            if ((int)common_get("Cube.Admin.StopReason").Value == 10)
+            {
+                stop();
+            }
         }
 
     }

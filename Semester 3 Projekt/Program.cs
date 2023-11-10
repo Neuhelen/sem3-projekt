@@ -1,7 +1,12 @@
+using Semester_3_Projekt.controller;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<BeerDBConn>(options =>
+options.UseMySql(builder.Configuration.GetConnectionString("BeerDBConnectionString"), new MySqlServerVersion(new Version(8, 0, 4))));
 
 var app = builder.Build();
 

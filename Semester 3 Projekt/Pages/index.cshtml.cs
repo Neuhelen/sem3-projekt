@@ -8,6 +8,7 @@ namespace Semester_3_Projekt.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         public BeerMachineAPI _beerMachineAPI;
+        public BeerDBConn Beerdb;
 
         public IndexModel(ILogger<IndexModel> logger)
         {

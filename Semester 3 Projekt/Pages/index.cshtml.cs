@@ -17,7 +17,6 @@ namespace Semester_3_Projekt.Pages
 
         public void OnGet()
         {
-            bool status = _beerMachineAPI.common_post("Cube.Command.MachSpeed", 50f);
         }
     }
 }

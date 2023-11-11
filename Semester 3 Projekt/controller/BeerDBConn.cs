@@ -19,5 +19,6 @@ namespace Semester_3_Projekt.controller
         public DbSet<ProductIngredient> ProductIngredients { get; set; }
         public DbSet<Batch> Batchs { get; set; }
         public DbSet<Batch_Log> BatchLogs { get; set; }
+
     }
 }

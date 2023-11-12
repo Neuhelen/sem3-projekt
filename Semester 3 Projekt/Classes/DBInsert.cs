@@ -1,4 +1,5 @@
-﻿using Semester_3_Projekt.controller;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using Semester_3_Projekt.controller;
 using Semester_3_Projekt.Models;
 
 namespace Semester_3_Projekt.Classes
@@ -34,7 +35,7 @@ namespace Semester_3_Projekt.Classes
             BeerDB.Ingredients.Add(ingredient);
             BeerDB.SaveChanges();
             Ingredients ing = new Ingredients();
-            ing.id = ingredient.Id;
+            ing.Id = ingredient.Id;
             ing.Name = ingredient.Name;
             return ingredient.Id;
         }
@@ -64,6 +65,30 @@ namespace Semester_3_Projekt.Classes
         {
             recipe.ingredients = ingredients;
             addRecipe(recipe);
+        }
+
+
+        public void addBatch(int ProductID, int Quantity)
+        {
+            Batch batch = new Batch()
+            {
+                ProductId = ProductID,
+                Quantity = Quantity
+            };
+            BeerDB.Add(batch);
+            BeerDB.SaveChanges();
+        }
+
+        public void addLog(int BatchID, string Event, string Description)
+        {
+            Batch_Log log = new Batch_Log()
+            {
+                BatchId = BatchID,
+                Event_Type = Event,
+                Description = Description
+            };
+            BeerDB.Add(log);
+            BeerDB.SaveChanges();
         }
     }
 }

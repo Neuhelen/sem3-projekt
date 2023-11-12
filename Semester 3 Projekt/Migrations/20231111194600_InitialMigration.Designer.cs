@@ -11,8 +11,8 @@ using Semester_3_Projekt.controller;
 namespace Semester_3_Projekt.Migrations
 {
     [DbContext(typeof(BeerDBConn))]
-    [Migration("20231110131146_Initial")]
-    partial class Initial
+    [Migration("20231111194600_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,12 +30,6 @@ namespace Semester_3_Projekt.Migrations
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
-
-                    b.Property<int>("Failed")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Passed")
-                        .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

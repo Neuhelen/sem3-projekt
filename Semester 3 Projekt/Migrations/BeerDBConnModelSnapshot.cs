@@ -28,12 +28,6 @@ namespace Semester_3_Projekt.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<int>("Failed")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Passed")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 

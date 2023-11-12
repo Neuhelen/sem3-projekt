@@ -6,8 +6,6 @@ namespace Semester_3_Projekt.controller
 {
     public sealed class BeerDBConn : DbContext
     {
-        
-
         public BeerDBConn(DbContextOptions<BeerDBConn> options) : base(options)
         {
           

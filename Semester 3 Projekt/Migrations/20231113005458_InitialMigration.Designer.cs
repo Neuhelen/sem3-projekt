@@ -11,7 +11,7 @@ using Semester_3_Projekt.controller;
 namespace Semester_3_Projekt.Migrations
 {
     [DbContext(typeof(BeerDBConn))]
-    [Migration("20231111194600_InitialMigration")]
+    [Migration("20231113005458_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

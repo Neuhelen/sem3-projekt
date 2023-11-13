@@ -7,6 +7,7 @@ namespace Semester_3_Projekt.Classes
         public List<Ingredients> ingredients;
         public string ProductName { get; set; }
         public int ProductID { get; set; }
+        public int batchId { get; set; }
 
         public Recipe() 
         {

@@ -87,6 +87,12 @@ namespace Semester_3_Projekt.controller
             return (bool) control_command.Value;
         }
 
+        public int get_Stop_Reason()
+        {
+            var stop_reason = common_get("Cube.Admin.StopReason.ID");
+            return (int) stop_reason.Value;
+        }
+
         public void stop()
         {
 
@@ -95,11 +101,36 @@ namespace Semester_3_Projekt.controller
             common_post("Cube.Command.CmdChangeRequest", true);
         }
 
-        public void ingredientStop()
+        public void stop_Reasons()
         {
 
-            if ((int)common_get("Cube.Admin.StopReason").Value == 10)
+            if (get_Stop_Reason() == 10)
             {
+                //Empty inventory: 
+                stop();
+            }
+
+            if (get_Stop_Reason() == 11)
+            {
+                //Maintenance needed: 
+                stop();
+            }
+
+            if (get_Stop_Reason() == 12)
+            {
+                //Manual stop: 
+                stop();
+            }
+
+            if (get_Stop_Reason() == 13)
+            {
+                //Motor power loss: 
+                stop();
+            }
+
+            if (get_Stop_Reason() == 14)
+            {
+                //Manual abort: 
                 stop();
             }
         }

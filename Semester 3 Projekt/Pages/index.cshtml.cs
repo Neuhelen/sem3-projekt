@@ -14,15 +14,6 @@ namespace Semester_3_Projekt.Pages
             _logger = logger;
             _beerMachineAPI = BeerMachineAPI.Instance;
         }
-        public void stop()
-        {
-
-            _beerMachineAPI.common_post("Cube.Command.PackMLCmd", 3);
-
-            _beerMachineAPI.common_post("Cube.Command.CmdChangeRequest", true);
-
-            _logger.LogInformation("Stop method called. PackMLCmd and CmdChangeRequest sent.");
-        }
 
         public void OnGet()
         {
@@ -34,12 +25,19 @@ namespace Semester_3_Projekt.Pages
             int control_command = _beerMachineAPI.get_Control_Command();
             _logger.LogInformation($"Control Command: {control_command}");
 
-            stop();
+            bool command_request = _beerMachineAPI.get_Command_Change_Request();
+            _logger.LogInformation($"Command Request: {command_request}");
+
+            int stop_reason = _beerMachineAPI.get_Stop_Reason();
+            _logger.LogInformation($"Stop Reason: {stop_reason}");
+
+            _beerMachineAPI.stop();
 
             _logger.LogInformation($"Current State: {state}");
 
             _logger.LogInformation($"Control Command: {control_command}");
 
+            _logger.LogInformation($"Command Request: {command_request}");
         }
     }
 }

@@ -4,13 +4,19 @@ using Semester_3_Projekt.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Xml.Linq;
+using Microsoft.Extensions.Options;
+using System.Drawing.Text;
 
 namespace Semester_3_Projekt.Classes
 {
     public class DBget
     {
         private BeerDBConn beerDB;
-        public DBget() { }
+        public DBget()
+        {
+            var BeerDBContextOptions = DBConnHelper.getBeerDBConn();
+            beerDB = new BeerDBConn(BeerDBContextOptions);
+        }
 
         public List<Products> getAllProducts()
         {
@@ -110,12 +116,30 @@ namespace Semester_3_Projekt.Classes
             return recipe;
         }
 
-        public List<Ingredients> GetIngredients ()
+        public List<Ingredients> GetAllIngredients()
         {
             var Ingredient = beerDB.Ingredients;
             List<Ingredients> ingredients = new List<Ingredients> ();
 
             return ingredients;
+        }
+
+        public int GetIngredientid(string Name)
+        {
+            int id = -1;
+            var Ingredient = beerDB.Ingredients;
+            var query =
+                from i in Ingredient
+                where i.Name == Name
+                select new
+                {
+                    Ingredient_Id = i.Id,
+                    Ingredient_Name = i.Name,
+                };
+
+            foreach ( var i in query ) { id = i.Ingredient_Id; }
+
+            return id;
         }
     }
 }

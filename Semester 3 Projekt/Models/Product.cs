@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public int Start_range { get; set; }
         public int End_range { get; set;}
+        public int? speed { get; set; }
     }
 }

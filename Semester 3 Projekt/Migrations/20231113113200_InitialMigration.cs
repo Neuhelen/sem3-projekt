@@ -39,7 +39,8 @@ namespace Semester_3_Projekt.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Start_range = table.Column<int>(type: "int", nullable: false),
-                    End_range = table.Column<int>(type: "int", nullable: false)
+                    End_range = table.Column<int>(type: "int", nullable: false),
+                    speed = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

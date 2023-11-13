@@ -2,22 +2,25 @@
 using Semester_3_Projekt.controller;
 using Semester_3_Projekt.Models;
 using Semester_3_Projekt.Classes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Semester_3_Projekt.Classes
 {
     public class DBInsert
     {
         private BeerDBConn BeerDB;
-        private DBget Bget;
+        private DBget BeerGet;
 
-        public DBInsert() 
+        public DBInsert()
         {
-            Bget = new DBget();
+            var BeerDBContextOptions = DBConnHelper.getBeerDBConn();
+            BeerDB = new BeerDBConn(BeerDBContextOptions);
+            BeerGet = new DBget();
         }
 
         public int addProduct (String Name, int Start_Range, int End_Range)
         {
-            if (Bget.getProductId(Name) == -1)
+            if (BeerGet.getProductId(Name) == -1)
             {
                 Product product = new Product()
                 {
@@ -31,10 +34,27 @@ namespace Semester_3_Projekt.Classes
             else { return 0; }
         }
 
+        public int addProduct(String Name, int Start_Range, int End_Range, int speed)
+        {
+            if (BeerGet.getProductId(Name) == -1)
+            {
+                Product product = new Product()
+                {
+                    Name = Name,
+                    Start_range = Start_Range,
+                    End_range = End_Range,
+                    speed = speed
+                };
+                BeerDB.Products.Add(product);
+                return BeerDB.SaveChanges();
+            }
+            else { return 0; }
+        }
+
         public int addIngredient (String Name)
         {
             Ingredient ingredient = new Ingredient() { Name = Name };
-            if(!BeerDB.Ingredients.Contains(ingredient)) BeerDB.Ingredients.Add(ingredient);
+            if(BeerGet.GetIngredientid(Name) == -1) BeerDB.Ingredients.Add(ingredient);
             return BeerDB.SaveChanges();
         }
 
@@ -42,16 +62,15 @@ namespace Semester_3_Projekt.Classes
         {
             foreach (Ingredients ingredient in recipe.ingredients)
             {
-                addIngredient(ingredient.Name);
                 ProductIngredient productIngredient = new ProductIngredient()
                 {
-                    Amount = ingredient.Amount,
-                    ProductId = recipe.ProductID,
-                    IngredientId = ingredient.Id
+                    ProductId = BeerGet.getProductId(recipe.ProductName),
+                    IngredientId = BeerGet.GetIngredientid(ingredient.Name),
+                    Amount = ingredient.Amount
                 };
                 BeerDB.ProductIngredients.Add(productIngredient);
-                BeerDB.SaveChanges();
             }
+            BeerDB.SaveChanges();
         }
 
         public void addRecipe (Recipe recipe, int Product)
@@ -60,7 +79,7 @@ namespace Semester_3_Projekt.Classes
             addRecipe(recipe);
         }
 
-        private void addRecipe(Recipe recipe, List<Ingredients> ingredients)
+        public void addRecipe (Recipe recipe, List<Ingredients> ingredients)
         {
             recipe.ingredients = ingredients;
             addRecipe(recipe);

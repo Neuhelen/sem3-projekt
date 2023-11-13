@@ -98,6 +98,9 @@ namespace Semester_3_Projekt.Migrations
                     b.Property<int>("Start_range")
                         .HasColumnType("int");
 
+                    b.Property<int?>("speed")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Products");

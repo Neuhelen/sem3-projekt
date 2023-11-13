@@ -11,7 +11,7 @@ using Semester_3_Projekt.controller;
 namespace Semester_3_Projekt.Migrations
 {
     [DbContext(typeof(BeerDBConn))]
-    [Migration("20231113005458_InitialMigration")]
+    [Migration("20231113113200_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -99,6 +99,9 @@ namespace Semester_3_Projekt.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<int>("Start_range")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("speed")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

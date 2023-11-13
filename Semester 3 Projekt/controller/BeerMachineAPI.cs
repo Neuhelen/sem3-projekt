@@ -110,25 +110,25 @@ namespace Semester_3_Projekt.controller
                 stop();
             }
 
-            if (get_Stop_Reason() == 11)
+            else if (get_Stop_Reason() == 11)
             {
                 //Maintenance needed: 
                 stop();
             }
 
-            if (get_Stop_Reason() == 12)
+            else if (get_Stop_Reason() == 12)
             {
                 //Manual stop: 
                 stop();
             }
 
-            if (get_Stop_Reason() == 13)
+            else if (get_Stop_Reason() == 13)
             {
                 //Motor power loss: 
                 stop();
             }
 
-            if (get_Stop_Reason() == 14)
+            else 
             {
                 //Manual abort: 
                 stop();

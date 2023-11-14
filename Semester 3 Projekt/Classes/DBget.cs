@@ -59,6 +59,37 @@ namespace Semester_3_Projekt.Classes
             return id;
         }
 
+        public Product GetSpecificProducts(int ProduktID)
+        {
+            var product = beerDB.Products;
+            var query =
+                from p in product
+                where p.Id == ProduktID
+                select new
+                {
+                    p.Id,
+                    p.pName,
+                    p.Start_range,
+                    p.End_range,
+                    p.Speed
+                };
+
+            Product queryProducts = new Product();
+            foreach (var p in query)
+            {
+                Product qProducts = new Product()
+                {
+                    Id = p.Id,
+                    pName = p.pName,
+                    Start_range = p.Start_range,
+                    End_range = p.End_range,
+                    Speed = p.Speed
+                };
+                queryProducts = qProducts;
+            }
+            return queryProducts;
+        }
+
         public Recipe getRecipe(string Name)
         {
             Recipe recipe = new Recipe()

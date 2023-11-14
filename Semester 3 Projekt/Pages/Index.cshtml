@@ -4,80 +4,133 @@
     ViewData["Title"] = "Home Page";
 }
 
-@*CSS*@
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="Semester 3 Projekt/wwwroot/css/index.css" />
+</head>
+
 <style>
+    /* Main container */
+    .heroContainer {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* Title */
     h1 {
         color: #333;
+        margin-bottom: 20px;
     }
 
-    .heroContainer {
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
+    /* Dropdown container */
+    .dropDownBatch {
+        margin-bottom: 20px;
     }
 
-        .heroContainer p {
-            margin-bottom: 30px;
+        /* Dropdown label */
+        .dropDownBatch label {
+            margin-right: 10px;
         }
 
+    /* Info boxes */
+    .infoBoxes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Individual box */
+    .box {
+        border: 1px solid #000;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+    }
+
+    /* Button container */
     .secondBox {
         display: flex;
-        justify-content: space-between;
-        margin-top: 30px;
-        max-width: 400px;
+        justify-content: space-around;
+        margin-bottom: 20px;
     }
 
-    .secondBox > button {
-        border-radius: 3px;
-        cursor: pointer;
+        /* Buttons */
+        .secondBox > button {
+            border: 2px solid #000;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.1, transform 0.1s;
+        }
 
-    }
-
+    /* Start button */
     .startBtn {
-        background-color: green;
-        font-weight: bold;
+        background-color: #4CAF50;
+        color: white;
     }
 
+        .startBtn:active {
+            background-color: #367c3f;
+            transform: translateY(2px);
+        }
+
+    /* Stop button */
     .stopBtn {
-        background-color: red;
-        font-weight: bold;
+        background-color: #f44336;
+        color: white;
     }
 
+        .stopBtn:active {
+            background-color: #d63d2e;
+            transform: translateY(2px);
+        }
+
+    /* Continue button */
     .continueBtn {
-        background-color: coral;
-        font-weight: bold;
+        background-color: #ff9800;
+        color: white;
     }
 
+        .continueBtn:active {
+            background-color: #e68900;
+            transform: translateY(2px);
+        }
 </style>
 
-@*HTML*@
 
 <h1>Monitor tab</h1>
 
+<div class="alertPopup" id="alertPopup">Status: Idle</div>
 
 <div class="heroContainer">
 
     @*Dropdown for batch ID*@
     <div class="dropDownBatch">
-        <label for="batch-id">Choose your batch ID:</label>
+        <label for="batch-id">Batch ID:</label>
         <select name="batch-id" id="batch-id">
-            <option value="1">Batch ID 1</option>
-            <option value="2">Batch ID 2</option>
-            <option value="3">Batch ID 3</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
         </select>
-       
     </div>
 
     @*Monitoring*@
-    <p>Type</p>
-    <p>Successfull/Failed Batch</p>
-    <p>Products Produced</p>
-    <p>Quantity</p>
-    <p>Successful Amount</p>
-    <p>Production Speed</p>
-    <p>Speed</p>
-    <p>Failed amount</p>
-
+    <div class="infoBoxes">
+        <div class="box">Type</div>
+        <div class="box">Successfull/Failed Batch</div>
+        <div class="box">Products Produced</div>
+        <div class="box">Quantity</div>
+        <div class="box">Successful Amount</div>
+        <div class="box">Production Speed</div>
+        <div class="box">Speed</div>
+        <div class="box">Failed amount</div>
+    </div>
 
     @*Start, stop, continue buttons*@
     <div class="secondBox">
@@ -88,3 +141,37 @@
 
 </div>
 
+<!-- Inline JavaScript -->
+<script>
+    // This function updates the status text and applies the corresponding styling
+    function updateStatus(status) {
+        var alertPopup = document.getElementById('alertPopup');
+
+        // Remove existing status classes
+        alertPopup.classList.remove('running', 'stopped', 'maintenance', 'needsRefill');
+
+        // Set the text and add the class for the new status
+        alertPopup.textContent = 'Status: ' + status;
+        alertPopup.classList.add(status.toLowerCase());
+        alertPopup.style.display = 'block'; // Show the alert popup
+    }
+
+    // Event listeners for buttons
+    document.addEventListener('DOMContentLoaded', function () {
+        var startButton = document.querySelector('.startBtn');
+        var stopButton = document.querySelector('.stopBtn');
+        var continueButton = document.querySelector('.continueBtn');
+
+        startButton.addEventListener('click', function () {
+            updateStatus('Running');
+        });
+
+        stopButton.addEventListener('click', function () {
+            updateStatus('Stopped');
+        });
+
+        continueButton.addEventListener('click', function () {
+            updateStatus('Running'); // Assuming 'Continue' should also set the status to 'Running'
+        });
+    });
+</script>

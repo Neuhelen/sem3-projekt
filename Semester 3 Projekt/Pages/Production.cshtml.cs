@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ namespace Semester_3_Projekt.Pages
     public class ProductionModel : PageModel
     {
         public List<SelectListItem> ProductList { get; set; }
+        public ItemsFeature items { get; set; }
         public DBget BeerGet;
         public void OnGet()
         {

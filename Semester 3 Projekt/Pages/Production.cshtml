@@ -38,11 +38,8 @@
 	
 		<div class="grid-item"><label for="typeDropdown">Please select the type of beer to be produced:</label></div>
 		<div class="grid-item">
-		<select name="typeDropdown" id="typeDropdown">
-			<option value="item1">Item1</option>
-				<option value="item2">Item2</option>
-				<option value="item3">Item3</option>
-				<option value="item4">Item4</option>
+		<select asp-for="ProductList" asp-items="" name="typeDropdown" id="typeDropdown">
+			
 		</select>
 		</div>
 		<div class="grid-item"><label for="quantityInput">Please enter the quantity of beer to be produced: </label></div>

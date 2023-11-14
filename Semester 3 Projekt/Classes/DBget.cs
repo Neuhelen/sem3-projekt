@@ -18,7 +18,7 @@ namespace Semester_3_Projekt.Classes
             beerDB = new BeerDBConn(BeerDBContextOptions);
         }
 
-        public List<Products> getAllProducts()
+        public List<Product> getAllProducts()
         {
             var product = beerDB.Products;
             var query =
@@ -26,20 +26,22 @@ namespace Semester_3_Projekt.Classes
                 select new
                 {
                     p.Id,
-                    p.Name,
+                    p.pName,
                     p.Start_range,
-                    p.End_range
+                    p.End_range,
+                    p.Speed
                 };
 
-            List<Products> queryProducts = new List<Products>();
+            List<Product> queryProducts = new List<Product>();
             foreach (var p in query)
             {
-                Products qProducts = new Products()
+                Product qProducts = new Product()
                 {
-                    id = p.Id,
-                    name = p.Name,
-                    start_Range = p.Start_range,
-                    end_Range = p.End_range
+                    Id = p.Id,
+                    pName = p.pName,
+                    Start_range = p.Start_range,
+                    End_range = p.End_range,
+                    Speed = p.Speed
                 };
                 queryProducts.Add(qProducts);
             }
@@ -48,7 +50,7 @@ namespace Semester_3_Projekt.Classes
 
         public int getProductId (String Name)
         {
-            var product = beerDB.Products.Where(p => p.Name.Contains(Name)).ToList();
+            var product = beerDB.Products.Where(p => p.pName.Contains(Name)).ToList();
             int id = -1;
             foreach (var item in product)
             {
@@ -61,8 +63,7 @@ namespace Semester_3_Projekt.Classes
         {
             Recipe recipe = new Recipe()
             {
-                ProductName = Name,
-                ProductID = getProductId(Name)
+                Product = new Product() { pName = Name, Id = getProductId(Name) }
             };
             return GetProductIngredient(recipe);
         }
@@ -71,7 +72,7 @@ namespace Semester_3_Projekt.Classes
         {
             Recipe recipe = new Recipe()
             {
-                ProductID = ProductID
+                Product = new Product() { Id = ProductID }
             };
             return GetProductIngredient(recipe);
         }
@@ -85,14 +86,14 @@ namespace Semester_3_Projekt.Classes
                     from i in ingredient
                     join r in productsIngredient on i.Id equals r.IngredientId
                     join p in product on r.ProductId equals p.Id
-                    where p.Id == recipe.ProductID
+                    where p.Id == recipe.Product.Id
                     select new
                     {
                         Ingredient_Id = i.Id,
-                        Ingredient_Name = i.Name,
+                        Ingredient_Name = i.iName,
                         Ingredient_amount = r.Amount,
                         Product_Id = p.Id, 
-                        Product_Name = p.Name
+                        Product_Name = p.pName
                     };
 
             if (query.Count() > 0 )
@@ -100,26 +101,43 @@ namespace Semester_3_Projekt.Classes
                 Recipe ingredient_recipe = new Recipe();
                 foreach (var ProdIng in query)
                 {
-                    Ingredients ingredients = new Ingredients();
-                    ingredients.Id = ProdIng.Ingredient_Id;
-                    ingredients.Name = ProdIng.Ingredient_Name;
-                    ingredients.Amount = ProdIng.Ingredient_amount;
-                    if(ingredient_recipe.ProductID != ProdIng.Product_Id)
+                    RecipeIngredients ingredients = new RecipeIngredients();
+                    ingredients.Ingredient.Id = ProdIng.Ingredient_Id;
+                    ingredients.Ingredient.iName = ProdIng.Ingredient_Name;
+                    ingredients.Product.ProductId = ProdIng.Product_Id;
+                    ingredients.Product.IngredientId = ProdIng.Ingredient_Id;
+                    ingredients.Product.Amount = ProdIng.Ingredient_amount;
+                    if(ingredient_recipe.Product.Id != ProdIng.Product_Id)
                     {
-                        ingredient_recipe.ProductID = ProdIng.Product_Id;
-                        ingredient_recipe.ProductName = ProdIng.Product_Name;
+                        ingredient_recipe.Product.Id = ProdIng.Product_Id;
+                        ingredient_recipe.Product.pName = ProdIng.Product_Name;
                         recipe = ingredient_recipe;
                     }
-                    recipe.ingredients.Add(ingredients);
+                    recipe.Ingredients.Add(ingredients);
                 }
             }
             return recipe;
         }
 
-        public List<Ingredients> GetAllIngredients()
+        public List<Ingredient> GetAllIngredients()
         {
             var Ingredient = beerDB.Ingredients;
-            List<Ingredients> ingredients = new List<Ingredients> ();
+            var query =
+                from i in Ingredient
+                select new 
+                { 
+                    i.Id, 
+                    i.iName
+                };
+
+            List<Ingredient> ingredients = new List<Ingredient> ();
+            foreach (var q in query)
+            {
+                Ingredient ingredient = new Ingredient();
+                ingredient.Id = q.Id;
+                ingredient.iName = q.iName;
+                ingredients.Add(ingredient);
+            }
 
             return ingredients;
         }
@@ -130,16 +148,119 @@ namespace Semester_3_Projekt.Classes
             var Ingredient = beerDB.Ingredients;
             var query =
                 from i in Ingredient
-                where i.Name == Name
+                where i.iName == Name
                 select new
                 {
                     Ingredient_Id = i.Id,
-                    Ingredient_Name = i.Name,
+                    Ingredient_Name = i.iName,
                 };
 
             foreach ( var i in query ) { id = i.Ingredient_Id; }
 
             return id;
+        }
+
+        public List<Batch_Log> GetBatchLogs (int Batch_Id)
+        {
+            List<Batch_Log> logs = new List<Batch_Log> ();
+            Batch_Log log = new Batch_Log();
+            var Batch_Log = beerDB.BatchLogs;
+            var query =
+                from b in Batch_Log
+                where b.BatchId == Batch_Id
+                select new
+                {
+                    b.Id,
+                    b.BatchId,
+                    b.Time,
+                    b.Event_Type,
+                    b.Description
+                };
+
+            foreach ( var b in query )
+            {
+                log.Id = b.Id;
+                log.BatchId = b.BatchId;
+                log.Time = b.Time;
+                log.Event_Type = b.Event_Type;
+                log.Description = b.Description;
+                logs.Add( log );
+            }
+
+            return logs;
+        }
+
+        public Batchlog CreateBatchlog ( int Batch_Id )
+        {
+            Batchlog log = new Batchlog ();
+            
+            var Ingredients = beerDB.Ingredients;
+            var Recipe = beerDB.ProductIngredients;
+            var Products = beerDB.Products;
+            var Batchs = beerDB.Batchs;
+            var BatchLog = beerDB.BatchLogs;
+            var query =
+                from l in BatchLog
+                join b in Batchs on l.BatchId equals b.Id
+                join p in Products on b.ProductId equals p.Id
+                join r in Recipe on p.Id equals r.ProductId
+                join i in Ingredients on r.IngredientId equals i.Id
+                where l.BatchId == Batch_Id
+                select new
+                {
+                    l.Id,
+                    l.Time,
+                    l.Event_Type,
+                    l.Description,
+                    l.BatchId,
+                    b.Date,
+                    b.Quantity,
+                    b.ProductId,
+                    p.pName,
+                    p.Machine_Id,
+                    p.Start_range,
+                    p.End_range,
+                    p.Speed,
+                    r.IngredientId,
+                    r.Amount,
+                    i.iName
+                };
+
+            foreach ( var q in query )
+            {
+                if (log.Batch.Id != q.BatchId)
+                {
+                    log.Product.pName = q.pName;
+                    log.Product.Start_range = q.Start_range;
+                    log.Product.End_range = q.End_range;
+                    log.Product.Id = q.ProductId;
+                    log.Product.Machine_Id = q.Machine_Id;
+                    log.Product.Speed = q.Speed;
+                    log.Batch.Id = q.BatchId;
+                    log.Batch.ProductId = q.ProductId;
+                    log.Batch.Quantity = q.Quantity;
+                    log.Batch.Date = q.Date;
+                }
+                ProductIngredient bRecipe = new ProductIngredient();
+                bRecipe.ProductId = q.ProductId;
+                bRecipe.IngredientId = q.IngredientId;
+                bRecipe.Amount = q.Amount;
+                log.Recipe.Add( bRecipe );
+                Ingredient i = new Ingredient();
+                i.Id = q.IngredientId;
+                i.iName = q.iName;
+                log.Ingredients.Add( i );
+                Batch_Log _Log = new Batch_Log();
+                _Log.Id = q.Id;
+                _Log.BatchId = q.BatchId;
+                _Log.Time = q.Time;
+                _Log.Event_Type = q.Event_Type;
+                _Log.Description = q.Description;
+                log.BatchLogs.Add( _Log );
+            }
+
+
+            return log;
         }
     }
 }

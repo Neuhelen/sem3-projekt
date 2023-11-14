@@ -73,7 +73,7 @@ namespace Semester_3_Projekt.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("iName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -91,15 +91,18 @@ namespace Semester_3_Projekt.Migrations
                     b.Property<int>("End_range")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Machine_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Speed")
+                        .HasColumnType("int");
 
                     b.Property<int>("Start_range")
                         .HasColumnType("int");
 
-                    b.Property<int?>("speed")
-                        .HasColumnType("int");
+                    b.Property<string>("pName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

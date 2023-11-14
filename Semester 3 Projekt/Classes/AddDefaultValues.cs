@@ -1,4 +1,6 @@
-﻿namespace Semester_3_Projekt.Classes
+﻿using Semester_3_Projekt.Models;
+
+namespace Semester_3_Projekt.Classes
 {
     public class AddDefaultValues
     {
@@ -13,116 +15,85 @@
         public void SetDefaultValues()
         {
             List<Recipe> recipes = new List<Recipe>();
-            List<Ingredients> ingredients = new List<Ingredients>();
+            List<RecipeIngredients> ingredients = new List<RecipeIngredients>();
 
-            ingredients.Add(new Ingredients { Name = "Barley" });
-            ingredients.Add(new Ingredients { Name = "Hops" });
-            ingredients.Add(new Ingredients { Name = "Malt" });
-            ingredients.Add(new Ingredients { Name = "Wheat" });
-            ingredients.Add(new Ingredients { Name = "Yeast" });
+            string[] IngredientNames = { "Barley", "Hops", "Malt", "Wheat", "Yeast" };
+            foreach (string I in IngredientNames)
+            {
+                RecipeIngredients ing = new RecipeIngredients();
+                ing.Ingredient.iName = I;
+                ingredients.Add(ing);
+            }
 
-            recipes.Add(new Recipe
-            {
-                ProductName = "Pilsen",
-                Start_Range = 0,
-                End_Range = 600,
-                ingredients = ingredients
+            recipes.Add(new Recipe { 
+                Product = new Product { pName = "Pilsen", Machine_Id = 0, Start_range = 0, End_range = 600 },
+                Ingredients = ingredients
             });
-            recipes.Add(new Recipe
-            {
-                ProductName = "Wheat",
-                Start_Range = 0,
-                End_Range = 300,
-                ingredients = ingredients
+            recipes.Add(new Recipe { 
+                Product = new Product { pName = "Wheat", Machine_Id = 1, Start_range = 0, End_range = 300 },
+                Ingredients = ingredients
             });
-            recipes.Add(new Recipe
-            {
-                ProductName = "IPA",
-                Start_Range = 0,
-                End_Range = 150,
-                ingredients = ingredients
+            recipes.Add(new Recipe { 
+                Product = new Product { pName = "IPA", Machine_Id = 2, Start_range = 0, End_range = 150 },
+                Ingredients = ingredients
             });
-            recipes.Add(new Recipe
-            {
-                ProductName = "Stout",
-                Start_Range = 0,
-                End_Range = 200,
-                ingredients = ingredients
+            recipes.Add(new Recipe { 
+                Product = new Product { pName = "Stout", Machine_Id = 3, Start_range = 0, End_range = 200 },
+                Ingredients = ingredients
             });
-            recipes.Add(new Recipe
-            {
-                ProductName = "Ale",
-                Start_Range = 0,
-                End_Range = 100,
-                ingredients = ingredients
+            recipes.Add(new Recipe { 
+                Product = new Product { pName = "Ale", Machine_Id = 4, Start_range = 0, End_range = 100 },
+                Ingredients = ingredients
             });
-            recipes.Add(new Recipe
-            {
-                ProductName = "Alcohol Free",
-                Start_Range = 0,
-                End_Range = 125,
-                ingredients = ingredients
+            recipes.Add(new Recipe { 
+                Product = new Product { pName = "Alcohol Free", Machine_Id = 5, Start_range = 0, End_range = 125 },
+                Ingredients = ingredients
             });
 
             foreach (Recipe recipe in recipes)
             {
-                BeerInsert.addProduct(recipe.ProductName, recipe.Start_Range, recipe.End_Range);
-                recipe.ProductID = BeerGet.getProductId(recipe.ProductName);
-                foreach (Ingredients ingredient in recipe.ingredients)
+                BeerInsert.addProduct(recipe.Product.pName, recipe.Product.Machine_Id, recipe.Product.Start_range, recipe.Product.End_range);
+                recipe.Product.Id = BeerGet.getProductId(recipe.Product.pName);
+                foreach (RecipeIngredients ingredient in recipe.Ingredients)
                 {
-                    BeerInsert.addIngredient(ingredient.Name);
-                    ingredient.Id = BeerGet.GetIngredientid(ingredient.Name);
-                    switch (recipe.ProductName)
+                    BeerInsert.addIngredient(ingredient.Ingredient.iName);
+                    ingredient.Ingredient.Id = BeerGet.GetIngredientid(ingredient.Ingredient.iName);
+                    switch (recipe.Product.pName)
                     {
                         case "Pilsen":
-                            switch (ingredient.Name)
-                            {
-                                case "Barley": ingredient.Amount = 0; break;
-                                case "Hops": ingredient.Amount = 0; break;
-                                case "Malt": ingredient.Amount = 0; break;
-                                case "Wheat": ingredient.Amount = 0; break;
-                                case "Yeast": ingredient.Amount = 0; break;
-                            }
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
                             break;
                         case "Wheat":
-                            switch (ingredient.Name)
-                            {
-                                case "Barley": ingredient.Amount = 0; break;
-                                case "Hops": ingredient.Amount = 0; break;
-                                case "Malt": ingredient.Amount = 0; break;
-                                case "Wheat": ingredient.Amount = 0; break;
-                                case "Yeast": ingredient.Amount = 0; break;
-                            }
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
                             break;
                         case "IPA":
-                            switch (ingredient.Name)
-                            {
-                                case "Barley": ingredient.Amount = 0; break;
-                                case "Hops": ingredient.Amount = 0; break;
-                                case "Malt": ingredient.Amount = 0; break;
-                                case "Wheat": ingredient.Amount = 0; break;
-                                case "Yeast": ingredient.Amount = 0; break;
-                            }
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
                             break;
                         case "Stout":
-                            switch (ingredient.Name)
-                            {
-                                case "Barley": ingredient.Amount = 0; break;
-                                case "Hops": ingredient.Amount = 0; break;
-                                case "Malt": ingredient.Amount = 0; break;
-                                case "Wheat": ingredient.Amount = 0; break;
-                                case "Yeast": ingredient.Amount = 0; break;
-                            }
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
                             break;
                         case "Ale":
-                            switch (ingredient.Name)
-                            {
-                                case "Barley": ingredient.Amount = 0; break;
-                                case "Hops": ingredient.Amount = 0; break;
-                                case "Malt": ingredient.Amount = 0; break;
-                                case "Wheat": ingredient.Amount = 0; break;
-                                case "Yeast": ingredient.Amount = 0; break;
-                            }
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
                             break;
                     }
                 }

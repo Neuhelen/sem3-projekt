@@ -21,7 +21,7 @@ namespace Semester_3_Projekt.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    iName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -36,11 +36,12 @@ namespace Semester_3_Projekt.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    Machine_Id = table.Column<int>(type: "int", nullable: false),
+                    pName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Start_range = table.Column<int>(type: "int", nullable: false),
                     End_range = table.Column<int>(type: "int", nullable: false),
-                    speed = table.Column<int>(type: "int", nullable: true)
+                    Speed = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

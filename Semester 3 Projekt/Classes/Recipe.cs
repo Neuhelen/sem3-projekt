@@ -1,38 +1,22 @@
-﻿using System.Collections;
+﻿using Semester_3_Projekt.Models;
+using System.Collections;
 
 namespace Semester_3_Projekt.Classes
 {
     public class Recipe
     {
-        public List<Ingredients> ingredients;
-        public string ProductName { get; set; }
-        public int ProductID { get; set; }
-        public int Start_Range { get; set; }
-        public int End_Range { get; set; }
-        public int Speed { get; set; }
-        public int batchId { get; set; }
+        public List<RecipeIngredients> Ingredients;
+        public Product Product;
 
         public Recipe() 
         {
-            ingredients = new List<Ingredients>();
+            Ingredients = new List<RecipeIngredients>();
+            Product = new Product();
         }
 
-        public Recipe(List<Ingredients> Ingredients, string Name, int Id)
+        public void Addingredient (RecipeIngredients ingredient)
         {
-            ingredients = Ingredients;
-            ProductName = Name;
-            ProductID = Id;
+            Ingredients.Add(ingredient);
         }
-
-        public void addIngredient (string Name, int Amount)
-        {
-            ingredients.Add(new Ingredients(Name, Amount));
-        }
-        public void addIngredient(string Name, int Amount, int Id)
-        {
-            ingredients.Add(new Ingredients(Name, Amount, Id));
-        }
-
-
     }
 }

@@ -71,5 +71,16 @@ namespace Semester_3_Projekt.controller
             return (UInt16) produced_good_value.Value;
         }
 
+        public bool set_production_amount(float quantity)
+        {
+            bool success = common_post("Cube.Command.Parameter[2].Value", quantity);
+            return success;
+        }
+
+        public bool set_production_speed(float speed)
+        {
+            bool success = common_post("Cube.Command.MachSpeed", speed);
+            return success;
+        }
     }
 }

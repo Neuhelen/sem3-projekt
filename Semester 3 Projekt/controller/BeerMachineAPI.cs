@@ -101,38 +101,45 @@ namespace Semester_3_Projekt.controller
             common_post("Cube.Command.CmdChangeRequest", true);
         }
 
-        public void stop_Reasons()
+        public string stop_Reasons()
         {
-
+            var stop_reason = ""; 
             if (get_Stop_Reason() == 10)
             {
                 //Empty inventory: 
                 stop();
+                stop_reason = "Empty inventory"; 
             }
 
             else if (get_Stop_Reason() == 11)
             {
                 //Maintenance needed: 
                 stop();
+                stop_reason = "Maintenance needed";
             }
 
             else if (get_Stop_Reason() == 12)
             {
                 //Manual stop: 
                 stop();
+                stop_reason = "Manual stop";
             }
 
             else if (get_Stop_Reason() == 13)
             {
                 //Motor power loss: 
                 stop();
+                stop_reason = "Motor power loss";
             }
 
             else 
             {
                 //Manual abort: 
                 stop();
+                stop_reason = "Manual abort";
             }
+
+            return stop_reason;
         }
 
     }

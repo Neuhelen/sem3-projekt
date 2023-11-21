@@ -78,6 +78,26 @@
     <p>Speed</p>
     <p>Failed amount</p>
 
+    <label for="stop_reason">Stop Reason:</label>
+    <p id="stop_reason"></p>
+
+    <script>
+        //This function fetches the stop reason from the server
+        function get_Stop_Reason() {
+            
+            fetch('//BeerMachineAPI/stop_Reasons')
+                .then(response => response.text())
+                .then(stop_Reason => {
+                    //This part updates the text for the stop reason. 
+                    document.getElementById('stop_reason').innerText = stop_Reason;
+                })
+                .catch(error => console.error('Error fetching Stop Reason:', error));
+        }
+
+        //This part calls the function whenn the page is loaded or reloaded. 
+        window.onload = get_Stop_Reason;
+    </script>
+
 
     @*Start, stop, continue buttons*@
     <div class="secondBox">

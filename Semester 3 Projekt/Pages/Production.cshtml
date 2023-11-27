@@ -34,14 +34,11 @@
 <!-- This part creates a form with labels and textfields that updates when a key has been pressed. -->
 <form id="productionForm" method="post">
 	<div class="grid-container">
-
-	
-		<!--<div class="grid-item"><label for="typeDropdown">Please select the type of beer to be produced:</label></div>
+		<div class="grid-item"><label for="typeDropdown">Please select the type of beer to be produced:</label></div>
 		<div class="grid-item">
-		<select asp-for="ProductList" asp-items="ProductItem" name="typeDropdown" id="typeDropdown">
-			
-		</select> 
-		</div>-->
+			<select asp-for="ProductList" asp-items="Model.ProductList" name="typeDropdown" id="typeDropdown">
+			</select> 
+		</div>
 		<div class="grid-item"><label for="quantityInput">Please enter the quantity of beer to be produced: </label></div>
 		<div class="grid-item"><input type="number" id="quantityInput" name="quantityInput"></div>
 		<div class="grid-item"><label for="speedInput">Please enter machine's speed during this production:</label></div>

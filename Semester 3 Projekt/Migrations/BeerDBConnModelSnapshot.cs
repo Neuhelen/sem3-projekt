@@ -60,6 +60,9 @@ namespace Semester_3_Projekt.Migrations
                     b.Property<TimeOnly>("Time")
                         .HasColumnType("time(6)");
 
+                    b.Property<int?>("Value")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BatchId");
@@ -133,6 +136,22 @@ namespace Semester_3_Projekt.Migrations
                     b.ToTable("ProductIngredients");
                 });
 
+            modelBuilder.Entity("Semester_3_Projekt.Models.Queue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BatchId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BatchId");
+
+                    b.ToTable("Queues");
+                });
+
             modelBuilder.Entity("Semester_3_Projekt.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -195,6 +214,17 @@ namespace Semester_3_Projekt.Migrations
                     b.Navigation("Ingredient");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Semester_3_Projekt.Models.Queue", b =>
+                {
+                    b.HasOne("Semester_3_Projekt.Models.Batch", "batch")
+                        .WithMany()
+                        .HasForeignKey("BatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("batch");
                 });
 #pragma warning restore 612, 618
         }

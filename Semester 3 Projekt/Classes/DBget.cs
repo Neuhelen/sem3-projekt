@@ -6,6 +6,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Extensions.Options;
 using System.Drawing.Text;
+using Microsoft.CodeAnalysis;
 
 namespace Semester_3_Projekt.Classes
 {
@@ -48,13 +49,43 @@ namespace Semester_3_Projekt.Classes
             return queryProducts;
         }
 
-        public int getProductId (String Name)
+        public int getProductId (string Name)
         {
             var product = beerDB.Products.Where(p => p.pName.Contains(Name)).ToList();
             int id = -1;
             foreach (var item in product)
             {
                 id = item.Id;
+            }
+            return id;
+        }
+        public int getProductId(int MachineId)
+        {
+            var product = beerDB.Products.Where(p => p.Machine_Id == MachineId).ToList();
+            int id = -1;
+            foreach (var item in product)
+            {
+                id = item.Id;
+            }
+            return id;
+        }
+
+        public int getBatchId(int MachineId)
+        {
+            var product = beerDB.Products.Where(p => p.Machine_Id == MachineId).ToList();
+            int Productid = -1;
+            foreach (var item in product)
+            {
+                Productid = item.Id;
+            }
+            int id = -1;
+            if(Productid != -1)
+            {
+                var Batch = beerDB.Batchs.Where(b => b.ProductId == Productid).ToList();
+                foreach (var item in Batch)
+                {
+                    id = item.Id;
+                }
             }
             return id;
         }

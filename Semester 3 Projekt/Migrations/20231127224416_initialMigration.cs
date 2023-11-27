@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Semester_3_Projekt.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -129,6 +129,7 @@ namespace Semester_3_Projekt.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "text", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<int>(type: "int", nullable: true),
                     Time = table.Column<TimeOnly>(type: "time(6)", nullable: false)
                 },
                 constraints: table =>
@@ -136,6 +137,26 @@ namespace Semester_3_Projekt.Migrations
                     table.PrimaryKey("PK_BatchLogs", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BatchLogs_Batchs_BatchId",
+                        column: x => x.BatchId,
+                        principalTable: "Batchs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Queues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    BatchId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Queues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Queues_Batchs_BatchId",
                         column: x => x.BatchId,
                         principalTable: "Batchs",
                         principalColumn: "Id",
@@ -162,6 +183,11 @@ namespace Semester_3_Projekt.Migrations
                 name: "IX_ProductIngredients_ProductId",
                 table: "ProductIngredients",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Queues_BatchId",
+                table: "Queues",
+                column: "BatchId");
         }
 
         /// <inheritdoc />
@@ -174,13 +200,16 @@ namespace Semester_3_Projekt.Migrations
                 name: "ProductIngredients");
 
             migrationBuilder.DropTable(
+                name: "Queues");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Batchs");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Ingredients");
+                name: "Batchs");
 
             migrationBuilder.DropTable(
                 name: "Products");

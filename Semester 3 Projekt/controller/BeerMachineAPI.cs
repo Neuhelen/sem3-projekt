@@ -81,6 +81,18 @@ namespace Semester_3_Projekt.controller
         {
             bool success = common_post("Cube.Command.MachSpeed", speed);
             return success;
+		}
+
+		public bool set_production_Product(float id)
+		{
+			bool success = common_post("Cube.Command.Parameter[1].Value", id);
+			return success;
+        }
+
+        public bool set_production_Batch(float id)
+        {
+            bool success = common_post("Cube.Command.Parameter[0].Value", id);
+            return success;
         }
     }
 }

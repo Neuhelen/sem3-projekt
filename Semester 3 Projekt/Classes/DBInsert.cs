@@ -90,27 +90,73 @@ namespace Semester_3_Projekt.Classes
 
         public void addBatch(int ProductID, int Quantity)
         {
+            DateTime dateTime = DateTime.Now;
             Batch batch = new Batch()
             {
                 ProductId = ProductID,
                 Quantity = Quantity,
-                Date = DateOnly.FromDateTime(new DateTime())
+                Date = DateOnly.FromDateTime(dateTime)
             };
-            BeerDB.Add(batch);
+            BeerDB.Batchs.Add(batch);
             BeerDB.SaveChanges();
         }
 
+        public void addLog(int BatchID, string Event)
+        {
+            DateTime dateTime = DateTime.Now;
+            Batch_Log log = new Batch_Log()
+            {
+                BatchId = BatchID,
+                Event_Type = Event,
+                Time = TimeOnly.FromDateTime(dateTime)
+            };
+            BeerDB.BatchLogs.Add(log);
+            BeerDB.SaveChanges();
+        }
         public void addLog(int BatchID, string Event, string Description)
         {
+            DateTime dateTime = DateTime.Now;
             Batch_Log log = new Batch_Log()
             {
                 BatchId = BatchID,
                 Event_Type = Event,
                 Description = Description,
-                Time = TimeOnly.FromDateTime(new DateTime())
+                Time = TimeOnly.FromDateTime(dateTime)
             };
-            BeerDB.Add(log);
+            BeerDB.BatchLogs.Add(log);
             BeerDB.SaveChanges();
+        }
+        public void addLog(int BatchID, string Event, int Value)
+        {
+            DateTime dateTime = DateTime.Now;
+            Batch_Log log = new Batch_Log()
+            {
+                BatchId = BatchID,
+                Event_Type = Event,
+                Value = Value,
+                Time = TimeOnly.FromDateTime(dateTime)
+            };
+            BeerDB.BatchLogs.Add(log);
+            BeerDB.SaveChanges();
+        }
+        public void addLog(int BatchID, string Event, string Description, int Value)
+        {
+            DateTime dateTime = DateTime.Now;
+            Batch_Log log = new Batch_Log()
+            {
+                BatchId = BatchID,
+                Event_Type = Event,
+                Description = Description,
+                Value = Value,
+                Time = TimeOnly.FromDateTime(dateTime)
+            };
+            BeerDB.BatchLogs.Add(log);
+            BeerDB.SaveChanges();
+        }
+
+        public void addQueue(int BatchID)
+        {
+            Queue queue = new Queue() { BatchId = BatchID };
         }
     }
 }

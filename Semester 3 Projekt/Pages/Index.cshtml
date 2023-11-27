@@ -81,23 +81,8 @@
     <label for="stop_reason">Stop Reason:</label>
     <p id="stop_reason"></p>
 
-    <script>
-        //This function fetches the stop reason from the server
-        function get_Stop_Reason() {
-            
-            fetch('//BeerMachineAPI/stop_Reasons')
-                .then(response => response.text())
-                .then(stop_Reason => {
-                    //This part updates the text for the stop reason. 
-                    document.getElementById('stop_reason').innerText = stop_Reason;
-                })
-                .catch(error => console.error('Error fetching Stop Reason:', error));
-        }
-
-        //This part calls the function whenn the page is loaded or reloaded. 
-        window.onload = get_Stop_Reason;
-    </script>
-
+    <label for="state_current">State Current:</label>
+    <p id="state_current"></p>
 
     @*Start, stop, continue buttons*@
     <div class="secondBox">
@@ -106,5 +91,43 @@
         <button class="continueBtn">Continue</button>
     </div>
 
+    <script>
+        //This function fetches information, such as ther Stop Reason or State Current, from the server and updates the text in the "Monitor Tab". 
+        function get_Status(parameter, targetElementId) {
+            fetch(`/Semester_3_Projekt.controller/BeerMachineAPI/${parameter}`)
+                .then(response => response.text())
+                .then(status => {
+                    //Theis part updates the text for the specified parameter. 
+                    document.getElementById(targetElementId).innerText = status;
+                })
+                .catch(error => console.error(`Error fetching ${parameter}:`, error));
+        }
+
+        //This function disables the "Start", "Stop" and "Continue" buttons based on the state_current value. 
+        function disableButtons_State(state_current) {
+            const startBtn = document.querySelector('.startBtn');
+            const stopBtn = document.querySelector('.stopBtn');
+            const continueBtn = document.querySelector('.continueBtn');
+
+            //This switch-case uses state_currentto enable and disable the buttons. 
+            if (state_current === 'Suspended') {
+                startBtn.disabled = true;
+                stopBtn.disabled = true;
+                continueBtn.disabled = false;
+            } else {
+                //This part combines the states of "Stopped", "Idle", "Aborted", and "Complete".
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                continueBtn.disabled = true;
+            }
+        }
+
+        //This part calls the function using the different parameters when the page is loaded or reloaded. 
+        window.onload = function () {
+            get_Status('stop_Reasons', 'stop_reason');
+            get_Status('state_Current', 'state_current');
+            disableButtons_State(state_current);
+        };
+    </script>
 </div>
 

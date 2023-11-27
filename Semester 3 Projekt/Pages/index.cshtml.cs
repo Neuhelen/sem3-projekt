@@ -38,6 +38,12 @@ namespace Semester_3_Projekt.Pages
             _logger.LogInformation($"Control Command: {control_command}");
 
             _logger.LogInformation($"Command Request: {command_request}");
+
+            //_beerMachineAPI.common_post("Cube.Command.CntrlCmd", 2);
+
+            //_beerMachineAPI.common_post("Cube.Command.CmdChangeRequest", true);
+
+            //_beerMachineAPI.measureBeersPerSecond(30); 
         }
     }
 }

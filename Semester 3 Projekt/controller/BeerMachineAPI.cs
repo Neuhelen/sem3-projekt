@@ -1,4 +1,5 @@
 ﻿using Opc.UaFx.Client;
+using System.Diagnostics;
 
 namespace Semester_3_Projekt.controller
 {
@@ -59,13 +60,13 @@ namespace Semester_3_Projekt.controller
             return (UInt16) produced_value.Value;
         }
 
-        public int get_prodcued_bad()
+        public int get_produced_bad()
         {
             var produced_bad_value = common_get("product.bad");
             return (UInt16) produced_bad_value.Value;
         }
 
-        public int get_prodcued_good()
+        public int get_produced_good()
         {
             var produced_good_value = common_get("product.good");
             return (UInt16) produced_good_value.Value;
@@ -93,54 +94,120 @@ namespace Semester_3_Projekt.controller
             return (int) stop_reason.Value;
         }
 
+        public bool set_production_amount(float quantity)
+        {
+            bool success = common_post("Cube.Command.Parameter[2].Value", quantity);
+            return success;
+        }
+
+        public bool set_production_speed(float speed)
+        {
+            bool success = common_post("Cube.Command.MachSpeed", speed);
+            return success;
+        }
+
         public void stop()
         {
 
-            common_post("Cube.Command.PackMLCmd", 3);
+            common_post("Cube.Command.CntrlCmd", 3);
 
             common_post("Cube.Command.CmdChangeRequest", true);
         }
 
         public string stop_Reasons()
         {
-            var stop_reason = ""; 
-            if (get_Stop_Reason() == 10)
-            {
-                //Empty inventory: 
-                stop();
-                stop_reason = "Empty inventory"; 
-            }
 
-            else if (get_Stop_Reason() == 11)
-            {
-                //Maintenance needed: 
-                stop();
-                stop_reason = "Maintenance needed";
-            }
+            int stopCode = get_Stop_Reason();
+            stop(); 
 
-            else if (get_Stop_Reason() == 12)
-            {
-                //Manual stop: 
-                stop();
-                stop_reason = "Manual stop";
-            }
+            string stop_reason;
 
-            else if (get_Stop_Reason() == 13)
+            switch (stopCode)
             {
-                //Motor power loss: 
-                stop();
-                stop_reason = "Motor power loss";
-            }
-
-            else 
-            {
-                //Manual abort: 
-                stop();
-                stop_reason = "Manual abort";
+                case 10:
+                    stop_reason = "Empty inventory";
+                    break;
+                case 11:
+                    stop_reason = "Maintenance needed";
+                    break;
+                case 12:
+                    stop_reason = "Manual stop";
+                    break;
+                case 13:
+                    stop_reason = "Motor power loss";
+                    break;
+                default:
+                    stop_reason = "Manual abort";
+                    break;
             }
 
             return stop_reason;
         }
 
+        public string state_Current()
+        {
+
+            int stateCode = get_Current_State();
+
+            string state_current;
+
+            switch (stateCode)
+            {
+                case 2:
+                    state_current = "Stopped";
+                    break;
+                case 4:
+                    state_current = "Idle";
+                    break;
+                case 5:
+                    state_current = "Suspended";
+                    break;
+                case 9:
+                    state_current = "Aborted";
+                    break;
+                default:
+                    state_current = "Complete";
+                    break;
+            }
+
+            return state_current;
+        }
+        
+        private Stopwatch stopwatch = new Stopwatch();
+        private double productionSpeed; 
+
+        //This function measures the time taken to produce a desired amount of beers. 
+        public void measureBeersPerSecond(int desiredAmount)
+        {
+            stopwatch.Start();
+
+            //While the desired amount hasn't been reached, get the produced anounnt every second. 
+            int producedAmount = 0;
+            while (producedAmount < desiredAmount)
+            {
+                producedAmount = get_produced();
+
+                System.Threading.Thread.Sleep(1000); 
+            }
+
+            stopwatch.Stop();
+
+            double time = stopwatch.Elapsed.TotalSeconds;
+
+            //if time has elapsed, write the production speed of beers per second to the Console. 
+            if (time > 0)
+            {
+                productionSpeed = producedAmount / time;
+                Console.WriteLine($"The production speed of beers per second is: {productionSpeed}");
+                Console.WriteLine($"The production speed was set to: {get_cur_mach_speed()}");
+            }
+            else
+            {
+                Console.WriteLine("There has been an error.");
+            }
+
+            stopwatch.Reset();
+        
+        }
     }
 }

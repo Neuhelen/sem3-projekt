@@ -47,6 +47,12 @@ namespace Semester_3_Projekt.controller
             }
         }
 
+        public int get_Ingredient_Amount(string Ingredient)
+        {
+            var Ingredient_Amount_value = common_get("Inventory."+Ingredient);
+            return (UInt16)Ingredient_Amount_value.Value;
+        }
+
         public float get_cur_mach_speed()
         {
             var mach_speed_value = common_get("Cube.Status.CurMachSpeed");

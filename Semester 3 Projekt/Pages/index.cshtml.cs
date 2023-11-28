@@ -4,6 +4,8 @@ using Semester_3_Projekt.controller;
 using Semester_3_Projekt.Classes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Reflection.Emit;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Semester_3_Projekt.Pages
 {
@@ -13,6 +15,7 @@ namespace Semester_3_Projekt.Pages
         public BeerMachineAPI _beerMachineAPI;
         public DBInsert BeerInsert;
         public DBget BeerGet;
+        
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -27,6 +30,7 @@ namespace Semester_3_Projekt.Pages
             //bool status = _beerMachineAPI.common_post("Cube.Command.MachSpeed", 50f);
             /*AddDefaultValues addDefaultValues = new AddDefaultValues();
             addDefaultValues.SetDefaultValues();*/
+            
         }
     }
 }

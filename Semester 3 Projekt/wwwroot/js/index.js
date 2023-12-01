@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
         alertPopup.style.display = 'block'; // Show the alert popup
     }
 
+    function updateCurrentBatch(batchId) {
+        document.getElementById('currentBatch').textContent = batchId;
+        // Example
+        updateCurrentBatch('1'); // Call this function when the batch changes
+    }
+
     // Event listeners for buttons
     document.addEventListener('DOMContentLoaded', function () {
         var startButton = document.querySelector('.startBtn');

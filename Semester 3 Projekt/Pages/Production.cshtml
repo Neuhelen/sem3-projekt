@@ -31,25 +31,56 @@
 
 <h1>Production Tab</h1>
 
-<!-- This part creates a form with labels and textfields that updates when a key has been pressed. -->
-<form id="productionForm" method="post">
-	<div class="grid-container">
-		<div class="grid-item"><label for="typeDropdown">Please select the type of beer to be produced:</label></div>
-		<div class="grid-item">
-			<select asp-for="ProductList" asp-items="Model.ProductList" name="typeDropdown" id="typeDropdown">
-			</select> 
-		</div>
-		<div class="grid-item"><label for="quantityInput">Please enter the quantity of beer to be produced: </label></div>
-		<div class="grid-item"><input type="number" id="quantityInput" name="quantityInput"></div>
-		<div class="grid-item"><label for="speedInput">Please enter machine's speed during this production:</label></div>
-		<div class="grid-item"><input type="number" id="speedInput" name="speedInput"></div>
-		<!-- This part creates a button to submit the form. -->
-		<button type="submit" id="setProductionButton">Set Production</button>
-	</div>
+<!-- This part creates a grid of labels and the inputs for each. -->
+<div class="grid-container">
+    <div class="grid-item"><label for="typeDropdown">Please select the type of beer to be produced:</label></div>
+    <div class="grid-item">
+        <select asp-for="ProductList" asp-items="Model.ProductList" name="typeDropdown" id="typeDropdown">
+        </select>
+    </div>
+    <div class="grid-item"><label for="quantityInput">Please enter the quantity of beer to be produced: </label></div>
+    <div class="grid-item"><input type="number" id="quantityInput" name="quantityInput"></div>
 
-	<br>
-	<br>
+    <!-- This part creates a button to trigger the AJAX request. -->
+    <button type="button" id="createBatchButton">Create Batch</button>
+</div>
 
-	
-</form>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#createBatchButton").click(function () {
+            //This part gets the data from the textfields above.
+            var typeDropdown = $("#typeDropdown").val();
+            var quantityInput = $("#quantityInput").val();
+            
 
+            //This puts the previous data into a log message.
+            var logMessage = "The type of beer for this batch is: " + typeDropdown +
+                ". The quantity of beer for this batch is: " + quantityInput + ".";
+
+            //This parts makes an AJAX request to our Controller's function "batchCreation(string logMessage)" 
+            //containing the data and the log message above in order to log the creation of a batch.
+            $.ajax({
+                type: "POST",
+                url: "/YourController/batchCreation",
+                data: JSON.stringify({
+                    quantity: formData.quantityInput,
+                    recipe_id: formData.typeDropdown,
+                    logMessage: logMessage
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    //This part logs the success into the console log, should the AJAX request succeed.
+                    console.log(result);
+                },
+                error: function (status, error) {
+                    //This part logs HTTP response and the error into the console log, should the AJAX request fail. Afterwards an alert will pop up. 
+                    console.error("Error status:", status);
+                    console.error("Error message:", error);
+                    alert("An error occurred. Please try again.");
+                }
+            });
+        });
+    });
+</script>

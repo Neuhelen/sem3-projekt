@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
         alertPopup.style.display = 'block'; // Show the alert popup
     }
 
+    function updateCurrentBatch(batchId) {
+        document.getElementById('currentBatch').textContent = batchId;
+        // Example
+        updateCurrentBatch('1'); // Call this function when the batch changes
+    }
+
     // Event listeners for buttons
     document.addEventListener('DOMContentLoaded', function () {
         var startButton = document.querySelector('.startBtn');
@@ -34,4 +40,24 @@ document.addEventListener('DOMContentLoaded', function () {
             updateStatus('Running'); // Assuming 'Continue' should also set the status to 'Running'
         });
     });
+
+    // Example logic to update maintenance bar
+    function updateMaintenanceBar() {
+        let progress = calculateMaintenanceProgress(); // Implement this function based on your logic
+        let maintenanceBar = document.getElementById('maintenanceProgress');
+        let maintenanceStatus = document.getElementById('maintenanceStatus');
+
+        maintenanceBar.style.width = progress + '%';
+
+        if (progress >= 100) {
+            maintenanceStatus.innerText = 'Maintenance Required';
+            maintenanceBar.style.backgroundColor = 'red';
+        } else {
+            maintenanceStatus.innerText = 'Maintenance Status: Good';
+            maintenanceBar.style.backgroundColor = '#4CAF50';
+        }
+    }
+
+    // Call this function based on specific triggers or intervals
+    updateMaintenanceBar();
 });

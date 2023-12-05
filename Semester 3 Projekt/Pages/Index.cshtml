@@ -14,7 +14,20 @@
 
 <div class="alertPopup" id="alertPopup">Status: Idle</div>
 
+@* Maintenance Bar *@
+<div class="maintenanceContainer">
+    <div class="maintenanceBar" id="maintenanceBar">
+        <div class="maintenanceProgress" id="maintenanceProgress"></div>
+    </div>
+    <span id="maintenanceStatus">Maintenance Status: Good</span>
+</div>
+
 <div class="heroContainer">
+
+    <div class="currentBatchDisplay">
+        <span>Current Batch:</span>
+        <span id="currentBatch">None</span>
+    </div>
 
     @*Dropdown for batch ID*@
     <div class="dropDownBatch">

@@ -32,5 +32,28 @@ namespace Semester_3_Projekt.Pages
             addDefaultValues.SetDefaultValues();*/
             
         }
+
+        /*[HttpGet]
+        public JsonResult update_monitor()
+        {
+            var md = new monitor_data()
+            {
+                BatchID = Convert.ToUInt16(1),
+                BeerType = "test",
+                Quantity = Convert.ToUInt16(2),
+                ProducedProducts = Convert.ToUInt16(3),
+                GoodProducts = Convert.ToUInt16(4),
+                BadProducts = Convert.ToUInt16(5),
+                SetSpeed = Convert.ToUInt16(6),
+                CurSpeed = Convert.ToUInt16(7),
+                BarleyAmount = Convert.ToUInt16(8),
+                HopsAmount = Convert.ToUInt16(9),
+                MaltAmount = Convert.ToUInt16(10),
+                WheatAmount = Convert.ToUInt16(11),
+                YeastAmount = Convert.ToUInt16(12),
+            };
+
+            return new JsonResult(Ok(md));
+        }*/
     }
 }

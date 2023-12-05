@@ -28,19 +28,19 @@
 
     @*Monitoring*@
     <div class="infoBoxes">
-        <div class="box">Type</div>
-        <div class="box">Successfull/Failed Batch</div>
-        <div class="box">Products Produced</div>
-        <div class="box">Quantity</div>
-        <div class="box">Successful Amount</div>
-        <div class="box">Production Speed</div>
-        <div class="box">Speed</div>
-        <div class="box">Failed Amount</div>
-        <div class="box" name="Barley">Barley Amount: </div>
-        <div class="box" name="Hops">Hops Amount</div>
-        <div class="box" name="Malt">Malt Amount</div>
-        <div class="box" name="Wheat">Wheat Amount</div>
-        <div class="box" name="Yeast">Yeast Amount</div>
+        <div class="box">Batch id: <label name="batchId" id="batchId"></label></div>
+        <div class="box">Type: <label name="BeerType" id="beerType"></label></div>
+        <div class="box">Products Produced: <label name="producedProducts" id="producedProducts"></label></div>
+        <div class="box">Quantity: <label name="quantity" id="quantity"></label></div>
+        <div class="box">Successful Amount: <label name="goodProducts" id="goodProducts"></label></div>
+        <div class="box">Failed Amount: <label name="badProducts" id="badProducts"></label></div>
+        <div class="box">Production Speed: <label name="setSpeed" id="setSpeed"></label></div>
+        <div class="box">Speed: <label name="curSpeed" id="curSpeed"></label></div>
+        <div class="box" name="Barley">Barley Amount: <label name="barleyAmount" id="barleyAmount"></label></div>
+        <div class="box" name="Hops">Hops Amount: <label name="hopsAmount" id="hopsAmount"></label></div>
+        <div class="box" name="Malt">Malt Amount: <label name="maltAmount" id="maltAmount"></label></div>
+        <div class="box" name="Wheat">Wheat Amount: <label name="wheatAmount" id="wheatAmount"></label></div>
+        <div class="box" name="Yeast">Yeast Amount: <label name="yeastAmount" id="yeastAmount"></label></div>
     </div>
 
     @*Start, stop, continue buttons*@
@@ -52,5 +52,27 @@
 
 </div>
 
-<script src="index.js"></script>
 
+
+
+<!-- Monitor update AJAX call -->
+
+<script src="js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("update_monitor")",
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+            },
+            failure: function(jqXHR, textStatus, errorThrown) {
+                alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+            }
+            });
+    });
+
+
+</script>

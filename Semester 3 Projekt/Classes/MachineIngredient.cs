@@ -3,7 +3,7 @@
     public class MachineIngredient
     {
         public string Name { get; set; }
-        public int CurrentValue { get; set; }
+        public float CurrentValue { get; set; }
         public int MaxValue { get; set; }
 
         public MachineIngredient()

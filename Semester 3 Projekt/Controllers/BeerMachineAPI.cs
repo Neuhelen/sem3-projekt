@@ -47,10 +47,10 @@ namespace Semester_3_Projekt.controller
             }
         }
 
-        public int get_Ingredient_Amount(string Ingredient)
+        public float get_Ingredient_Amount(string Ingredient)
         {
             var Ingredient_Amount_value = common_get("Inventory."+Ingredient);
-            return (UInt16)Ingredient_Amount_value.Value;
+            return (float)Ingredient_Amount_value.Value;
         }
 
         public float get_cur_mach_speed()
@@ -65,13 +65,13 @@ namespace Semester_3_Projekt.controller
             return (UInt16) produced_value.Value;
         }
 
-        public int get_prodcued_bad()
+        public int get_produced_bad()
         {
             var produced_bad_value = common_get("product.bad");
             return (UInt16) produced_bad_value.Value;
         }
 
-        public int get_prodcued_good()
+        public int get_produced_good()
         {
             var produced_good_value = common_get("product.good");
             return (UInt16) produced_good_value.Value;
@@ -99,6 +99,36 @@ namespace Semester_3_Projekt.controller
         {
             bool success = common_post("Cube.Command.Parameter[0].Value", id);
             return success;
+        }
+
+        public float get_quantity()
+        {
+            var quantity_value = common_get("Cube.Status.Parameter[1].Value");
+            return (float) quantity_value.Value;
+        }
+
+        public float get_beer_type()
+        {
+            var beer_type = common_get("Cube.Admin.Parameter[0].Value");
+            return (float)beer_type.Value;
+        }
+
+        public int get_batch_id()
+        {
+            var batch_id = common_get("batch_id");
+            return (UInt16)batch_id.Value;
+        }
+
+        public float get_machine_speed()
+        {
+            var machine_speed = common_get("Cube.Command.MachSpeed");
+            return (float)machine_speed.Value;
+        }
+
+        public int get_state()
+        {
+            var state = common_get("Cube.Status.StateCurrent");
+            return (int)state.Value;
         }
     }
 }

@@ -70,6 +70,17 @@ namespace Semester_3_Projekt.Classes
             return id;
         }
 
+        public string getProductName(int MachineId)
+        {
+            var product = beerDB.Products.Where(p => p.Machine_Id == MachineId).ToList();
+            string name = "";
+            foreach (var item in product)
+            {
+                name = item.pName;
+            }
+            return name;
+        }
+
         public int getBatchId(int MachineId)
         {
             var product = beerDB.Products.Where(p => p.Machine_Id == MachineId).ToList();

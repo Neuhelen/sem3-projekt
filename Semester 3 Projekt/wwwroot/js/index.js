@@ -40,4 +40,24 @@ document.addEventListener('DOMContentLoaded', function () {
             updateStatus('Running'); // Assuming 'Continue' should also set the status to 'Running'
         });
     });
+
+    // Example logic to update maintenance bar
+    function updateMaintenanceBar() {
+        let progress = calculateMaintenanceProgress(); // Implement this function based on your logic
+        let maintenanceBar = document.getElementById('maintenanceProgress');
+        let maintenanceStatus = document.getElementById('maintenanceStatus');
+
+        maintenanceBar.style.width = progress + '%';
+
+        if (progress >= 100) {
+            maintenanceStatus.innerText = 'Maintenance Required';
+            maintenanceBar.style.backgroundColor = 'red';
+        } else {
+            maintenanceStatus.innerText = 'Maintenance Status: Good';
+            maintenanceBar.style.backgroundColor = '#4CAF50';
+        }
+    }
+
+    // Call this function based on specific triggers or intervals
+    updateMaintenanceBar();
 });

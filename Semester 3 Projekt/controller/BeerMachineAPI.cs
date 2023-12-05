@@ -1,4 +1,5 @@
 ﻿using Opc.UaFx.Client;
+using Semester_3_Projekt.Classes;
 
 namespace Semester_3_Projekt.controller
 {
@@ -99,6 +100,85 @@ namespace Semester_3_Projekt.controller
         {
             bool success = common_post("Cube.Command.Parameter[0].Value", id);
             return success;
+        }
+
+        public int get_Current_State()
+        {
+            var current_state = common_get("Cube.Status.StateCurrent");
+            return (int)current_state.Value;
+        }
+        public int get_Control_Command()
+        {
+            var control_command = common_get("Cube.Command.CntrlCmd");
+            return (int)control_command.Value;
+        }
+
+        public bool get_Command_Change_Request()
+        {
+            var control_command = common_get("Cube.Command.CmdChangeRequest");
+            return (bool)control_command.Value;
+        }
+
+        public int get_Stop_Reason()
+        {
+            var stop_reason = common_get("Cube.Admin.StopReason");
+            return (int)stop_reason.Value;
+        }
+
+        public int get_Current_BatchID()
+        {
+            var current_batchID = common_get("Cube.Status.Parameter.Parameter[0]");
+            return (int)current_batchID.Value;
+        }
+
+        
+
+        DBInsert dbInsert = new DBInsert();
+
+        //This function stops the production and logs it. 
+        public bool stop(string stopCode)
+        {
+            bool success = common_post("Cube.Command.CntrlCmd", 3);
+
+            common_post("Cube.Command.CmdChangeRequest", true);
+
+            dbInsert.addLog(get_Current_BatchID(), stopCode);
+
+            return success;
+        }
+
+        //This function starts the production. 
+        public bool start()
+        {
+            bool success = common_post("Cube.Command.CntrlCmd", 2);
+
+            common_post("Cube.Command.CmdChangeRequest", true);
+
+            dbInsert.addLog(get_Current_BatchID(), "Manual Start");
+
+            return success;
+        }
+
+        //This function continues the production of the batch and logs it
+        public bool continue_production()
+        {
+            bool success = start();
+
+            dbInsert.addLog(get_Current_BatchID(), "Manual Continue");
+
+            return success;
+        }
+
+        //This function is used on the creation of a batch in order to set and log the input information. 
+        public void batchCreation(string logMessage)
+        {
+            dbInsert.addLog(get_Current_BatchID(), "Batch Creation");
+        }
+
+        //This function is used on the completion of a batch in order to log the results. 
+        public void logSuccess(string logMessage)
+        {
+            dbInsert.addLog(get_Current_BatchID(), "Batch Completed");
         }
     }
 }

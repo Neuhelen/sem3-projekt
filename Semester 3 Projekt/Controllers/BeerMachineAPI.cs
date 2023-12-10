@@ -136,14 +136,45 @@ namespace Semester_3_Projekt.controller
         DBInsert dbInsert = new DBInsert();
 
         //This function stops the production and logs it. 
-        public bool stop(string stopCode)
+        public bool stop()
         {
             bool success = common_post("Cube.Command.CntrlCmd", 3);
 
             common_post("Cube.Command.CmdChangeRequest", true);
 
-            dbInsert.addLog(get_Current_BatchID(), stopCode);
+            return success;
+        }
 
+        public bool manual_stop()
+        {
+            bool success = stop();
+
+            dbInsert.addLog(get_Current_BatchID(), "Manual Stop");
+
+            return success;
+        }
+
+        public bool stop_check(int stopCode)
+        {
+            bool success = false;
+
+            if (stopCode == 10) {
+                stop();
+                dbInsert.addLog(get_Current_BatchID(), "Empty inventory");
+                success = true;
+            } else if(stopCode == 11) {
+                stop();
+                dbInsert.addLog(get_Current_BatchID(), "Maintenance needed");
+                success = true;
+            } else if(stopCode == 13) {
+                stop();
+                dbInsert.addLog(get_Current_BatchID(), "Motor power loss");
+                success = true;
+            } else if (stopCode == 14) {
+                stop();
+                dbInsert.addLog(get_Current_BatchID(), "Manual abort");
+                success = true;
+            }
             return success;
         }
 
@@ -172,13 +203,19 @@ namespace Semester_3_Projekt.controller
         //This function is used on the creation of a batch in order to set and log the input information. 
         public void batchCreation(string logMessage)
         {
-            dbInsert.addLog(get_Current_BatchID(), "Batch Creation");
+            dbInsert.addLog(get_Current_BatchID(), "Batch Creation", logMessage);
         }
 
         //This function is used on the completion of a batch in order to log the results. 
-        public void logSuccess(string logMessage)
+        public void logSuccess()
         {
-            dbInsert.addLog(get_Current_BatchID(), "Batch Completed");
+            if(get_state() == 17)
+            {
+                dbInsert.addLog(get_Current_BatchID(), "Batch Completed", "The total amount of beer produced is: "
+                + get_produced() + ". The amount of successfull beer produced is: " + get_produced_good()
+                + ". The amount of failed beer produced is: " + get_produced_bad() + ".");
+            }
+            
         }
 
         public float get_quantity()

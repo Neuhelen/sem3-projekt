@@ -45,8 +45,48 @@ namespace Semester_3_Projekt.controller
             md.WheatAmount = _beerMachineAPI.get_Ingredient_Amount("Wheat");
             md.YeastAmount = _beerMachineAPI.get_Ingredient_Amount("Yeast");
             md.State = _beerMachineAPI.get_state();
+            md.StopReason = _beerMachineAPI.get_Stop_Reason();
+
+            _beerMachineAPI.stop_check(_beerMachineAPI.get_Stop_Reason());
+            _beerMachineAPI.logSuccess(); 
 
             return new JsonResult(Ok(md));
+        }
+
+        public ActionResult button_actions(string function)
+        {
+            //This part calls the function indicated by the given string. 
+            switch (function)
+            {
+                case "start":
+                    start();
+                    break;
+                case "stop":
+                    stop();
+                    break;
+                case "continue":
+                    continue_production();
+                    break;
+                default:
+                    return Json(new { success = false, message = "Invalid action" });
+            }
+
+            return Json(new { success = true, message = "Action performed successfully" });
+        }
+
+        private void start()
+        {
+            _beerMachineAPI.start(); 
+        }
+
+        private void stop()
+        {
+            _beerMachineAPI.stop();
+        }
+
+        private void continue_production()
+        {
+            _beerMachineAPI.continue_production();
         }
     }
 }

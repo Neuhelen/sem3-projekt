@@ -79,13 +79,60 @@
             url: "@Url.Action("update_monitor")",
             dataType: "json",
             success: function(response) {
+                updateButtonStates(response.md.State);
+
                 console.log(response);
             },
             failure: function(jqXHR, textStatus, errorThrown) {
                 alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
             }
             });
-    });
 
+        $(".startBtn").click(function () {
+            button_actions("start");
+        });
+
+        $(".stopBtn").click(function () {
+            button_actions("stop");
+        });
+
+        $(".continueBtn").click(function () {
+            button_actions("continue");
+        });
+
+        //This part uses the appropriate function in the Monitor Controller whenever a button is clicked in the Monitor Tab. 
+        function button_actions(action) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("button_actions")",
+                data: { action: action },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+
+        //This function enables and disables the buttons based on the Current State of the machine. 
+        function updateButtonStates(state_current) {
+            var startBtn = $(".startBtn");
+            var stopBtn = $(".stopBtn");
+            var continueBtn = $(".continueBtn");
+
+            if (state_current === 'Suspended') {
+                startBtn.disabled = true;
+                stopBtn.disabled = true;
+                continueBtn.disabled = false;
+            } else {
+                //This part combines the states of "Stopped", "Idle", "Aborted", and "Complete". 
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                continueBtn.disabled = true;
+            }
+        }
+    });
 
 </script>

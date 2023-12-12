@@ -130,7 +130,14 @@ namespace Semester_3_Projekt.controller
         public int get_Current_BatchID()
         {
             var current_batchID = common_get("Cube.Status.Parameter.Parameter[0]");
-            return (int)current_batchID.Value;
+            if(current_batchID != null)
+            {
+                return (int)current_batchID.Value;
+            } else
+            {
+                return -1;
+            }
+            
         }
 
         

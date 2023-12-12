@@ -84,7 +84,7 @@
                 document.getElementById("yeastAmount").innerHTML = "Yeast Amount: " + response["value"]["yeastAmount"];
                 document.getElementById("statusAlert").innerHTML = "Status: " + response["value"]["state"]
                 document.getElementById("stopReason").innerHTML = "Stop Reason: " + response["value"]["stopReason"]
-                //updateButtonStates(response.md.State);
+                updateButtonStates(response["value"]["state"]);
                 setTimeout(monitor_update, 5000);
             },
             failure: function(jqXHR, textStatus, errorThrown) {
@@ -123,23 +123,24 @@
         }
 
         //This function enables and disables the buttons based on the Current State of the machine.
-        /*function updateButtonStates(state_current) {
+        function updateButtonStates(state_current) {
+            console.log("updateButtonStates() is run. state_current is: " + state_current)
             var startBtn = $(".startBtn");
             var stopBtn = $(".stopBtn");
             var continueBtn = $(".continueBtn");
 
-            if (state_current === 'Suspended') {
-                startBtn.disabled = true;
-                stopBtn.disabled = true;
-                continueBtn.disabled = false;
+            if (state_current == 5) {
+                startBtn.prop('disabled', true);
+                stopBtn.prop('disabled', true);
+                continueBtn.prop('disabled', false);
             } else {
                 //This part combines the states of "Stopped", "Idle", "Aborted", and "Complete".
-                startBtn.disabled = false;
-                stopBtn.disabled = true;
-                continueBtn.disabled = true;
+                startBtn.prop('disabled', false);
+                stopBtn.prop('disabled', true);
+                continueBtn.prop('disabled', true);
             }
         }
-        */
+        
     });
 
 

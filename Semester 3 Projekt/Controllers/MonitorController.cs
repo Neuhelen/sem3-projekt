@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using NuGet.Protocol;
 using Semester_3_Projekt.Classes;
 using Semester_3_Projekt.Models;
+using System.Diagnostics;
 
 
 namespace Semester_3_Projekt.controller
@@ -53,6 +54,7 @@ namespace Semester_3_Projekt.controller
             return new JsonResult(Ok(md));
         }
 
+        [HttpGet]
         public ActionResult button_actions(string function)
         {
             //This part calls the function indicated by the given string. 
@@ -62,7 +64,7 @@ namespace Semester_3_Projekt.controller
                     start();
                     break;
                 case "stop":
-                    stop();
+                    manual_stop();
                     break;
                 case "continue":
                     continue_production();
@@ -79,9 +81,9 @@ namespace Semester_3_Projekt.controller
             _beerMachineAPI.start(); 
         }
 
-        private void stop()
+        private void manual_stop()
         {
-            _beerMachineAPI.stop();
+            _beerMachineAPI.manual_stop();
         }
 
         private void continue_production()

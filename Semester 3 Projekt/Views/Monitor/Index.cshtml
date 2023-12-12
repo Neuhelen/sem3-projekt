@@ -42,6 +42,8 @@
         <div class="box" name="Malt"><label name="maltAmount" id="maltAmount">Malt Amount: </label></div>
         <div class="box" name="Wheat"><label name="wheatAmount" id="wheatAmount">Wheat Amount: </label></div>
         <div class="box" name="Yeast"><label name="yeastAmount" id="yeastAmount">Yeast Amount: </label></div>
+        <div class="box" name="StopReason"><label name="stopReason" id="stopReason">Yeast Amount: </label></div>
+
     </div>
 
     @*Start, stop, continue buttons*@
@@ -81,12 +83,63 @@
                 document.getElementById("wheatAmount").innerHTML = "Wheat Amount: " + response["value"]["wheatAmount"];
                 document.getElementById("yeastAmount").innerHTML = "Yeast Amount: " + response["value"]["yeastAmount"];
                 document.getElementById("statusAlert").innerHTML = "Status: " + response["value"]["state"]
+                document.getElementById("stopReason").innerHTML = "Stop Reason: " + response["value"]["stopReason"]
+                //updateButtonStates(response.md.State);
                 setTimeout(monitor_update, 5000);
             },
             failure: function(jqXHR, textStatus, errorThrown) {
                 alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
             }
             });
+        $(".startBtn").click(function () {
+            console.log("Start button clicked");
+            button_actions("start");
+        });
+
+        $(".stopBtn").click(function () {
+            console.log("Stop button clicked");
+            button_actions("start");
+        });
+
+        $(".continueBtn").click(function () {
+            console.log("Continue button clicked");
+            button_actions("start");
+        });
+
+        //This part uses the appropriate function in the Monitor Controller whenever a button is clicked in the Monitor Tab.
+        function button_actions(action) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("button_actions")",
+                data: { function: action },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+
+        //This function enables and disables the buttons based on the Current State of the machine.
+        /*function updateButtonStates(state_current) {
+            var startBtn = $(".startBtn");
+            var stopBtn = $(".stopBtn");
+            var continueBtn = $(".continueBtn");
+
+            if (state_current === 'Suspended') {
+                startBtn.disabled = true;
+                stopBtn.disabled = true;
+                continueBtn.disabled = false;
+            } else {
+                //This part combines the states of "Stopped", "Idle", "Aborted", and "Complete".
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                continueBtn.disabled = true;
+            }
+        }
+        */
     });
 
 

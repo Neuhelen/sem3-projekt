@@ -5,6 +5,6 @@ namespace Semester_3_Projekt.Models
 {
     public class ProductionViewModel
     {
-        
+        public List<ProductListValue>? ProductItems { get; set; }
     }
 }

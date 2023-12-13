@@ -27,6 +27,7 @@ namespace Semester_3_Projekt.Classes
                 select new
                 {
                     p.Id,
+                    p.Machine_Id,
                     p.pName,
                     p.Start_range,
                     p.End_range,
@@ -39,6 +40,7 @@ namespace Semester_3_Projekt.Classes
                 Product qProducts = new Product()
                 {
                     Id = p.Id,
+                    Machine_Id = p.Machine_Id,
                     pName = p.pName,
                     Start_range = p.Start_range,
                     End_range = p.End_range,

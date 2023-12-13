@@ -34,12 +34,18 @@
 <h1>Production Tab</h1>
 
 <!-- This part creates a form with labels and textfields that updates when a key has been pressed. -->
-<form id="productionForm" method="post">
+<form id="productionForm" method="post" asp-action="Index" asp-controller="Production">
 	<div class="grid-container">
-		<div class="grid-item"><label for="typeDropdown">Please select the type of beer to be produced:</label></div>
+		<div class="grid-item"><label for="MachineID">Please select the type of beer to be produced:</label></div>
 		<div class="grid-item">
-			<select asp-for="ProductList" asp-items="Model.ProductList" name="typeDropdown" id="typeDropdown">
-			</select> 
+			<select class="ProductList" name="MachineID" id="MachineID">
+				@{
+					foreach(var product in ViewBag.Products)
+					{
+						<option value="@product.Value">@product.Text</option>
+					}
+				}
+			</select>
 		</div>
 		<div class="grid-item"><label for="quantityInput">Please enter the quantity of beer to be produced: </label></div>
 		<div class="grid-item"><input type="number" id="quantityInput" name="quantityInput"></div>

@@ -103,6 +103,20 @@ namespace Semester_3_Projekt.Classes
             return id;
         }
 
+        public List<int> getAllBatchId()
+        {
+            List<int> ids = new List<int>();
+            var Batch = beerDB.Batchs;
+            var query =
+                from b in Batch
+                select b.Id;
+            foreach (var item in query)
+            {
+                ids.Add(item);
+            }
+            return ids;
+        }
+
         public Product GetSpecificProducts(int ProduktID)
         {
             var product = beerDB.Products;

@@ -129,12 +129,13 @@
             var stopBtn = $(".stopBtn");
             var continueBtn = $(".continueBtn");
 
+            //If the current state is "Stopped", then the Stop-button is disabled. 
             if (state_current == 2) {
                 startBtn.prop('disabled', false);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', false);
             } else {
-                //This part combines the states of "Stopped", "Idle", "Aborted", and "Complete".
+                //This part combines the states of "Idle", "Suspended", "Aborted", and "Complete".
                 startBtn.prop('disabled', false);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);

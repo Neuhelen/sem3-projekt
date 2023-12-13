@@ -9,8 +9,7 @@ namespace Semester_3_Projekt.Controllers
 {
     public class ProductionController : Controller
     {
-        public List<SelectListItem> ProductList { get; set; }
-        public ItemsFeature items { get; set; }
+        public List<ProductListValue> ProductList { get; set; }
         public DBget BeerGet;
 		public DBInsert BeerInsert;
 		public BeerMachineAPI _beerAPI;
@@ -18,42 +17,37 @@ namespace Semester_3_Projekt.Controllers
         {
 			BeerGet = new DBget();
 			ProductList = Product_List();
+            ViewBag.Products = ProductList;
 			return View();
         }
 
 		[HttpPost]
-		public void QueProduction(float speedInput, float quantityInput, float typeDropdown)
+		public void QueProduction([FromForm] float MachineID, float quantityInput, float speedInput)
 		{
 			_beerAPI = BeerMachineAPI.Instance;
 			_beerAPI.set_production_amount(quantityInput);
 			_beerAPI.set_production_speed(speedInput);
-			_beerAPI.set_production_Product(typeDropdown);
+			_beerAPI.set_production_Product(MachineID);
 			BeerInsert = new DBInsert();
 			BeerGet = new DBget();
-			BeerInsert.addBatch(BeerGet.getProductId((int)typeDropdown), (int)quantityInput);
-			int BatchID = BeerGet.getBatchId((int)typeDropdown);
+			BeerInsert.addBatch(BeerGet.getProductId((int)MachineID), (int)quantityInput);
+			int BatchID = BeerGet.getBatchId((int)MachineID);
 			_beerAPI.set_production_Batch(BatchID);
 			ProductList = Product_List();
 			BeerInsert.addLog(BatchID, "Created");
+            Console.WriteLine("MachineID: "+MachineID.ToString());
 		}
-        public List<SelectListItem> Product_List()
+        public List<ProductListValue> Product_List()
         {
             List<Product> products = BeerGet.getAllProducts();
 
-            List<SelectListItem> products_list = new List<SelectListItem>();
+            List<ProductListValue> products_list = new List<ProductListValue>();
             if (products != null && products.Count > 0)
             {
                 int i = 0;
                 foreach (Product product in products)
                 {
-                    SelectListItem item = new SelectListItem();
-                    if (i == 0)
-                    {
-                        item.Selected = true;
-                        i++;
-                    }
-                    else
-                        item.Selected = false;
+					ProductListValue item = new ProductListValue();
                     item.Text = product.pName;
                     item.Value = product.Machine_Id.ToString();
                     products_list.Add(item);

@@ -26,7 +26,7 @@ namespace Semester_3_Projekt.Controllers
             batchRows.Add(new BatchRows(2, "Product"));
             foreach (int id in BatchIds)
             {
-                Batchlog batchlog = _dbGet.CreateBatchlog(id);
+                Batchlog batchlog = BeerGet.CreateBatchAnalyticlog(id);
                 batchlogs.Add(batchlog);
             }
             foreach (Batchlog batchlog in batchlogs)
@@ -38,9 +38,10 @@ namespace Semester_3_Projekt.Controllers
                     {
                         if (rows2.Name == log.Event_Type) exist = true;
                     }
-                    if (exist)
+                    if (!exist)
                     {
                         BatchRows rows1 = new BatchRows(rows, log.Event_Type);
+                        batchRows.Add(rows1);
                         rows++;
                     }
                 }

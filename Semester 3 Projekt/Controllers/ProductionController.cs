@@ -22,20 +22,23 @@ namespace Semester_3_Projekt.Controllers
         }
 
 		[HttpPost]
-		public void QueProduction([FromForm] float MachineID, float quantityInput, float speedInput)
+        [ActionName("Index")]
+		public IActionResult QueProduction(ProductionFormValues formValues)
 		{
 			_beerAPI = BeerMachineAPI.Instance;
-			_beerAPI.set_production_amount(quantityInput);
-			_beerAPI.set_production_speed(speedInput);
-			_beerAPI.set_production_Product(MachineID);
+			_beerAPI.set_production_amount(formValues.quantityInput);
+			_beerAPI.set_production_speed(formValues.speedInput);
+			_beerAPI.set_production_Product(formValues.MachineID);
 			BeerInsert = new DBInsert();
 			BeerGet = new DBget();
-			BeerInsert.addBatch(BeerGet.getProductId((int)MachineID), (int)quantityInput);
-			int BatchID = BeerGet.getBatchId((int)MachineID);
+			BeerInsert.addBatch(BeerGet.getProductId((int)formValues.MachineID), (int)formValues.quantityInput);
+			int BatchID = BeerGet.getBatchId((int)formValues.MachineID);
 			_beerAPI.set_production_Batch(BatchID);
 			ProductList = Product_List();
-			BeerInsert.addLog(BatchID, "Created");
-            Console.WriteLine("MachineID: "+MachineID.ToString());
+            ViewBag.Products = ProductList;
+            BeerInsert.addLog(BatchID, "Created");
+
+            return View();
 		}
         public List<ProductListValue> Product_List()
         {

@@ -26,7 +26,7 @@ namespace Semester_3_Projekt.Controllers
             batchRows.Add(new BatchRows(2, "Product"));
             foreach (int id in BatchIds)
             {
-                Batchlog batchlog = BeerGet.CreateBatchAnalyticlog(id);
+                Batchlog batchlog = _dbGet.CreateBatchAnalyticlog(id);
                 batchlogs.Add(batchlog);
             }
             foreach (Batchlog batchlog in batchlogs)

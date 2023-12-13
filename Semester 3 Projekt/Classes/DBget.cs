@@ -109,10 +109,14 @@ namespace Semester_3_Projekt.Classes
             var Batch = beerDB.Batchs;
             var query =
                 from b in Batch
-                select b.Id;
+                select new
+                {
+                    b.Id
+                };
             foreach (var item in query)
             {
-                ids.Add(item);
+                int id = item.Id;
+                ids.Add(id);
             }
             return ids;
         }
@@ -288,9 +292,9 @@ namespace Semester_3_Projekt.Classes
             var Recipe = beerDB.ProductIngredients;
             var Products = beerDB.Products;
             var Batchs = beerDB.Batchs;
-            var BatchLog = beerDB.BatchLogs;
+            var BatchLogs = beerDB.BatchLogs;
             var query =
-                from l in BatchLog
+                from l in BatchLogs
                 join b in Batchs on l.BatchId equals b.Id
                 join p in Products on b.ProductId equals p.Id
                 join r in Recipe on p.Id equals r.ProductId
@@ -349,6 +353,69 @@ namespace Semester_3_Projekt.Classes
                 _Log.Description = q.Description;
                 _Log.Value = q.Value;
                 log.BatchLogs.Add( _Log );
+            }
+
+            return log;
+        }
+
+        public Batchlog CreateBatchAnalyticlog(int Batch_Id)
+        {
+            Batchlog log = new Batchlog();
+
+            var Products = beerDB.Products;
+            var Batchs = beerDB.Batchs;
+            var BatchLogs = beerDB.BatchLogs;
+            var query =
+                from l in BatchLogs
+                join b in Batchs on l.BatchId equals b.Id
+                join p in Products on b.ProductId equals p.Id
+                where l.BatchId == Batch_Id
+                select new
+                {
+                    l.Id,
+                    l.Time,
+                    l.Event_Type,
+                    l.Description,
+                    l.BatchId,
+                    l.Value,
+                    b.Date,
+                    b.Quantity,
+                    b.ProductId,
+                    p.pName,
+                    p.Machine_Id,
+                    p.Start_range,
+                    p.End_range,
+                    p.Speed
+                };
+
+            foreach (var q in query)
+            {
+                if (log.Batch.Id != q.BatchId)
+                {
+                    log.Product.pName = q.pName;
+                    log.Product.Start_range = q.Start_range;
+                    log.Product.End_range = q.End_range;
+                    log.Product.Id = q.ProductId;
+                    log.Product.Machine_Id = q.Machine_Id;
+                    log.Product.Speed = q.Speed;
+                    log.Batch.Id = q.BatchId;
+                    log.Batch.ProductId = q.ProductId;
+                    log.Batch.Quantity = q.Quantity;
+                    log.Batch.Date = q.Date;
+                }
+                ProductIngredient bRecipe = new ProductIngredient();
+                bRecipe.ProductId = q.ProductId;
+                log.Recipe.Add(bRecipe);
+                Ingredient i = new Ingredient();
+                log.Ingredients.Add(i);
+                Batch_Log _Log = new Batch_Log();
+                _Log.Id = q.Id;
+                _Log.BatchId = q.BatchId;
+                _Log.Time = q.Time;
+                _Log.Event_Type = q.Event_Type;
+                _Log.Description = q.Description;
+                _Log.Value = q.Value;
+                log.BatchLogs.Add(_Log);
             }
 
             return log;

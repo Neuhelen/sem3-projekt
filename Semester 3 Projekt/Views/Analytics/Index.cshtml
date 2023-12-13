@@ -1,5 +1,66 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model Semester_3_Projekt.Controllers.AnalyticsController
+@using Semester_3_Projekt.Classes
 @{
 }
+<style>
+    .BatchCells {
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+<div class="TableContainer">
+    <table id="BatchTable">
+        @{
+            List<Batchlog> batchlogs = ViewBag.Batchlogs;
+            <tr>
+                @{
+                    foreach (BatchRows Rows in ViewBag.BatchRows)
+                    {
+                        <th class="BatchCells">@Rows.Name</th>
+                    }
+                }
+            </tr>
+            if(batchlogs.Count > 0)
+            {
+                foreach (Batchlog batchlog in batchlogs)
+                {
+                    <tr>
+                        @{
+                            <th>@batchlog.Batch.Id</th>
+                            <th>@batchlog.Batch.Date</th>
+                            <th>@batchlog.Product.pName</th>
+                            foreach (Batch_Log log in batchlog.BatchLogs)
+                            {
+                                foreach (BatchRows Rows in ViewBag.BatchRows)
+                                {
+                                    if (Rows.Name == log.Event_Type)
+                                    {
+                                        if (log.Value > 0)
+                                        {
+                                            <th>@log.Value</th>
+                                        }/*
+                                                else if (log.Description != null)
+                                                {
+                                                    <th>@log.Description</th>
+                                                }*/
+                                        else
+                                        {
+                                            <th>@log.Time</th>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <th></th>
+                                    }
+                                }
+                            }
+                        }
+                    </tr>
+                }
+            }
+        }
+    </table>
+</div>

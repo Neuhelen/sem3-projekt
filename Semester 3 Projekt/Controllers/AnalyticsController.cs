@@ -14,10 +14,11 @@ namespace Semester_3_Projekt.Controllers
             List<int> BatchIds = BeerGet.getAllBatchId();
             List<Batchlog> batchlogs = new List<Batchlog>();
             List<BatchRows> batchRows = new List<BatchRows>();
-            int rows = 3;
+            int rows = 4;
             batchRows.Add(new BatchRows(0, "Batch"));
-            batchRows.Add(new BatchRows(1, "Date"));
-            batchRows.Add(new BatchRows(2, "Product"));
+            batchRows.Add(new BatchRows(1, "Product"));
+            batchRows.Add(new BatchRows(2, "Amount"));
+            batchRows.Add(new BatchRows(3, "Date"));
             foreach (int id in BatchIds)
             {
                 Batchlog batchlog = BeerGet.CreateBatchAnalyticlog(id);

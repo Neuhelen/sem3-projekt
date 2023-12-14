@@ -11,6 +11,7 @@
         border-width: 1px;
     }
 </style>
+<script src="js/Analytic.js" type="text/javascript"></script>
 <div class="TableContainer">
     <table id="BatchTable">
         @{
@@ -30,8 +31,9 @@
                     <tr>
                         @{
                             <th class="BatchCells">@batchlog.Batch.Id</th>
-                            <th class="BatchCells">@batchlog.Batch.Date</th>
                             <th class="BatchCells">@batchlog.Product.pName</th>
+                            <th class="BatchCells">@batchlog.Batch.Quantity</th>
+                            <th class="BatchCells">@batchlog.Batch.Date</th>
                             foreach (Batch_Log log in batchlog.BatchLogs)
                             {
                                 foreach (BatchRows Rows in ViewBag.BatchRows)

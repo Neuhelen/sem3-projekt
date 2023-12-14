@@ -31,7 +31,7 @@ namespace Semester_3_Projekt.controller
         public JsonResult update_monitor()
         {
             md.clear_data();
-            md.BatchID = _beerMachineAPI.get_batch_id();
+            md.BatchID = _beerMachineAPI.get_Current_BatchID();
             var result = _beerMachineAPI.get_beer_type();
             md.BeerType = _dbGet.getProductName(Convert.ToInt32(result));
             md.Quantity = _beerMachineAPI.get_quantity();
@@ -61,12 +61,15 @@ namespace Semester_3_Projekt.controller
             switch (function)
             {
                 case "start":
+                    Debug.WriteLine("case: start works."); 
                     start();
                     break;
                 case "stop":
+                    Debug.WriteLine("case: stop works.");
                     manual_stop();
                     break;
                 case "continue":
+                    Debug.WriteLine("case: continue works.");
                     continue_production();
                     break;
                 default:
@@ -78,7 +81,7 @@ namespace Semester_3_Projekt.controller
 
         private void start()
         {
-            _beerMachineAPI.start(); 
+            _beerMachineAPI.start_log(); 
         }
 
         private void manual_stop()

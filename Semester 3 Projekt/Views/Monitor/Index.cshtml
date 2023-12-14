@@ -98,12 +98,12 @@
 
         $(".stopBtn").click(function () {
             console.log("Stop button clicked");
-            button_actions("start");
+            button_actions("stop");
         });
 
         $(".continueBtn").click(function () {
             console.log("Continue button clicked");
-            button_actions("start");
+            button_actions("continue");
         });
 
         //This part uses the appropriate function in the Monitor Controller whenever a button is clicked in the Monitor Tab.
@@ -124,7 +124,6 @@
 
         //This function enables and disables the buttons based on the Current State of the machine.
         function updateButtonStates(state_current, batch_id) {
-            console.log("updateButtonStates() is run. state_current is: " + state_current)
             var startBtn = $(".startBtn");
             var stopBtn = $(".stopBtn");
             var continueBtn = $(".continueBtn");
@@ -140,12 +139,12 @@
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
             }
-
-            if (batch_id == 0 || batch_id == -1) {
+            /*if (batch_id == 0 || batch_id == -1) {
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
             }
+            */
         }
         
     });

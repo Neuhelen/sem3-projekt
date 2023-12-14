@@ -81,7 +81,7 @@ namespace Semester_3_Projekt.controller
 
         private void start()
         {
-            _beerMachineAPI.start_log(); 
+            _beerMachineAPI.start_batch(); 
         }
 
         private void manual_stop()

@@ -198,12 +198,10 @@ namespace Semester_3_Projekt.controller
 
             return success;
         }
-        public bool start_log()
+        public bool start_batch()
         {
             Debug.WriteLine("API: start works.");
-            bool success = common_post("Cube.Command.CntrlCmd", 2);
-
-            common_post("Cube.Command.CmdChangeRequest", true);
+            bool success = start(); 
 
             dbInsert.addLog(get_Current_BatchID(), "Manual Start");
 

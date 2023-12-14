@@ -130,7 +130,7 @@
 
             //If the current state is "Stopped", then the Stop-button is disabled. 
             if (state_current == 2) {
-                startBtn.prop('disabled', false);
+                startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', false);
             } else -if (state_current == 6) {
@@ -154,14 +154,12 @@
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
             }
-            /*if (batch_id == 0 || batch_id == -1) {
+            if (batch_id == -1) {
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
             }
-            */
         }
-        
     });
 
 

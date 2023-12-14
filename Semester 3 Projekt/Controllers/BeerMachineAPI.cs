@@ -156,7 +156,7 @@ namespace Semester_3_Projekt.controller
 
         public bool manual_stop()
         {
-            Debug.WriteLine("API: start works.");
+            Debug.WriteLine("API: stop works.");
             bool success = stop();
 
             dbInsert.addLog(get_Current_BatchID(), "Manual Stop");

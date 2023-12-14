@@ -13,9 +13,19 @@
 
 <h1>Monitor tab CONTROLLER</h1>
 
-<div class="alertPopup" id="statusAlert">Status: Idle</div>
-
 <div class="heroContainer">
+
+    @*Alert popup for status*@
+    <div class="alertStatus">
+        <label for="status-alert">Status:</label>
+        <label name="statusAlert" id="statusAlert"></label>
+    </div>
+
+    @*Current Batch Display*@
+    <div class="currentBatchDisplay">
+        <label for="current-batch">Current Batch:</label>
+        <label name="currentBatch" id="currentBatch"></label>
+    </div>
 
     @*Dropdown for batch ID*@
     <div class="dropDownBatch">
@@ -54,7 +64,6 @@
     </div>
 
 </div>
-
 
 
 
@@ -155,12 +164,12 @@
                 continueBtn.prop('disabled', true);
             }
             if (batch_id == -1) {
+                //This part disables the buttons if there is no batch running.
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
             }
         }
     });
-
 
 </script>

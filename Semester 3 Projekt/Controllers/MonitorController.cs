@@ -61,37 +61,19 @@ namespace Semester_3_Projekt.controller
             switch (function)
             {
                 case "start":
-                    Debug.WriteLine("case: start works."); 
-                    start();
+                    _beerMachineAPI.start_batch();
                     break;
                 case "stop":
-                    Debug.WriteLine("case: stop works.");
-                    manual_stop();
+                    _beerMachineAPI.manual_stop();
                     break;
                 case "continue":
-                    Debug.WriteLine("case: continue works.");
-                    continue_production();
+                    _beerMachineAPI.continue_production();
                     break;
                 default:
                     return Json(new { success = false, message = "Invalid action" });
             }
 
             return Json(new { success = true, message = "Action performed successfully" });
-        }
-
-        private void start()
-        {
-            _beerMachineAPI.start_batch(); 
-        }
-
-        private void manual_stop()
-        {
-            _beerMachineAPI.manual_stop();
-        }
-
-        private void continue_production()
-        {
-            _beerMachineAPI.continue_production();
         }
     }
 }

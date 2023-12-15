@@ -49,7 +49,7 @@
                     }
                 }
             </tr>
-            if(batchlogs.Count > 0)
+            if (batchlogs.Count > 0)
             {
                 foreach (Batchlog batchlog in batchlogs)
                 {
@@ -69,10 +69,10 @@
                                         {
                                             <th class="BatchCells">@log.Value</th>
                                         }/*
-                                                else if (log.Description != null)
-                                                {
-                                                    <th class="BatchCells">@log.Description</th>
-                                                }*/
+                                                        else if (log.Description != null)
+                                                        {
+                                                            <th class="BatchCells">@log.Description</th>
+                                                        }*/
                                         else
                                         {
                                             <th class="BatchCells">@log.Time</th>
@@ -87,3 +87,29 @@
         }
     </table>
 </div>
+
+<style>
+
+
+    .SearchContainer, .TableContainer {
+        margin: 20px 0;
+        padding: 15px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+    }
+
+    .BatchCells, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    #BatchSearchSubmit {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+</style>

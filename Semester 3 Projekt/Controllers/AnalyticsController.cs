@@ -8,11 +8,11 @@ namespace Semester_3_Projekt.Controllers
 {
     public class AnalyticsController : Controller
     {
-		private DBget _dbGet;
+		private DBget BeerGet;
 
 		public AnalyticsController()
 		{
-			_dbGet = new DBget();
+            BeerGet = new DBget();
 		}
 		public IActionResult Index()
         {

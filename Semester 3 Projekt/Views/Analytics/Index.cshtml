@@ -10,7 +10,33 @@
         border-style: solid;
         border-width: 1px;
     }
+
+    .TableContainer {
+        width: 100%
+    }
 </style>
+
+<script src="js/Analytic.js" type="text/javascript"></script>
+<div class="SearchContainer">
+    <form id="BatchSearchForm" method="post" asp-action="Index" asp-controller="Analytics">
+        <div class="SearchGrid">
+            <select class="BatchChoice" id="BatchSearchChoice" name="BatchSearchChoice">
+                @{
+                    <option value="BatchID">Batch</option>
+                    <option value="Product">Product</option>
+                    <option value="Date">Date</option>
+                    <option value="FromDate">Dates After</option>
+                }
+            </select>
+        </div>
+        <div class="SearchGrid">
+            <input type="search" id="BatchSearchInput" name="BatchSearchInput" />
+        </div>
+        <div class="SearchGrid">
+            <input type="submit" id="BatchSearchSubmit" name="BatchSearchSubmit" />
+        </div>
+    </form>
+</div>
 <div class="TableContainer">
     <table id="BatchTable">
         @{
@@ -30,8 +56,9 @@
                     <tr>
                         @{
                             <th class="BatchCells">@batchlog.Batch.Id</th>
-                            <th class="BatchCells">@batchlog.Batch.Date</th>
                             <th class="BatchCells">@batchlog.Product.pName</th>
+                            <th class="BatchCells">@batchlog.Batch.Quantity</th>
+                            <th class="BatchCells">@batchlog.Batch.Date</th>
                             foreach (Batch_Log log in batchlog.BatchLogs)
                             {
                                 foreach (BatchRows Rows in ViewBag.BatchRows)

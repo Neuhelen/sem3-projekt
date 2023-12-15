@@ -1,4 +1,4 @@
-﻿namespace Semester_3_Projekt.Models
+﻿namespace Semester_3_Projekt.Classes
 {
     public class ProductListValue
     {

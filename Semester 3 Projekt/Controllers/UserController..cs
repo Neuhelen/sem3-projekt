@@ -4,49 +4,65 @@ using Semester_3_Projekt.Models;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Semester_3_Projekt.Classes;
 
 namespace Semester_3_Projekt.Controllers
 {
     public class UserController : Controller
     {
+        private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
+        //Constructor
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
+            //Dependency injection
+            _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
-        // GET: User/Login
+        //Login get
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: User/Login
+        //Login post
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var user = new User { Name = username, Role = UserRole.Admin };
-            var result = await _signInManager.PasswordSignInAsync(username, password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
+            //Check if model is valid
+            if (ModelState.IsValid)
             {
-                // this redirects to the monitor page
-                return RedirectToAction("Index", "Home");
+                //Sign in user
+                var result = await _signInManager.PasswordSignInAsync(model.Name, model.Password, model.RememberMe, false);
+
+                //Check if sign in was successful
+                if (result.Succeeded)
+                {
+                    //Redirect to home page
+                    return RedirectToAction("Index", "Home");
+                }
+
+                //Add error message
+                ModelState.AddModelError(string.Empty, "Invalid login attempt");
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return View();
-            }
+
+            //Return view
+            return View(model);
         }
 
-        //Post: User/Logout
+        //Logout
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "User");
+            return RedirectToAction(nameof(Login));
         }
     }
 }

@@ -23,7 +23,6 @@ namespace Semester_3_Projekt.controller
         }
         public IActionResult Index()
         {
-            
             return View();
         }
 
@@ -93,5 +92,6 @@ namespace Semester_3_Projekt.controller
         {
             _beerMachineAPI.continue_production();
         }
+
     }
 }

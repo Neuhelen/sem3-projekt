@@ -15,6 +15,14 @@
 
 <div class="heroContainer">
 
+    @*Maintenance progress bar*@
+    <div class="maintenanceContainer">
+        <div class="maintenanceBar">
+            <div class="maintenanceProgress" style="width: 50%;"></div>
+        </div>
+        <span class="maintenanceText">Maintenance in progress...</span>
+    </div>
+
     @*Alert popup for status*@
     <div class="alertStatus">
         <label for="status-alert">Status:</label>
@@ -39,7 +47,7 @@
 
     @*Monitoring*@
     <div class="infoBoxes">
-        <div class="box"><label name="batchId" id="batchId">Batch id: </label></div>
+        <div class="box"><label name="batchId" id="batchId">Batch ID: </label></div>
         <div class="box"><label name="BeerType" id="beerType">Type: </label></div>
         <div class="box"><label name="producedProducts" id="producedProducts">Products Produced: </label></div>
         <div class="box"><label name="quantity" id="quantity">Quantity: </label></div>
@@ -103,13 +111,11 @@
         $(".startBtn").click(function () {
             console.log("Start button clicked");
             button_actions("start");
-        });
-
+        }
         $(".stopBtn").click(function () {
             console.log("Stop button clicked");
             button_actions("stop");
         });
-
         $(".continueBtn").click(function () {
             console.log("Continue button clicked");
             button_actions("continue");
@@ -131,45 +137,104 @@
             });
         }
 
-        //This function enables and disables the buttons based on the Current State of the machine.
+        //This function enables and disables the buttons and show status based on the Current State of the machine.
         function updateButtonStates(state_current, batch_id) {
             var startBtn = $(".startBtn");
             var stopBtn = $(".stopBtn");
             var continueBtn = $(".continueBtn");
+
+            document.getElementById('startBtn').addEventListener('click', toggleMaintenance);
 
             //If the current state is "Stopped", then the Stop-button is disabled. 
             if (state_current == 2) {
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', false);
+                statusAlert.textContent = 'Stopped';
             } else -if (state_current == 6) {
                 //If the current state is "Execute", then the Stop-button is enabled and the other buttons are disabled.
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', false);
                 continueBtn.prop('disabled', true);
+                statusAlert.textContent = 'Executing';
             } else -if (state_current == 4) {
                 //If the current state is "Idle", then the Stop-button is disabled and the other buttons are enabled.
                 startBtn.prop('disabled', false);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', false);
-            } else -if (state_current == 6 || state_current == 9) {
-                //If the current state is "Aborted" or "Complete", then the Start-button is enabled and the other buttons are disabled.
+                statusAlert.textContent = 'Idle';
+            } else -if (state_current == 9) {
+                //If the current state is "Aborted", then the Start-button is enabled and the other buttons are disabled.
                 startBtn.prop('disabled', false);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
+                statusAlert.textContent = 'Aborted';
+            } else -if (state_current == 17) {
+                //If the current state is "Complete", then the Start-button is enabled and the other buttons are disabled.
+                startBtn.prop('disabled', false);
+                stopBtn.prop('disabled', true);
+                continueBtn.prop('disabled', true);
+                statusAlert.textContent = 'Complete';
             } else {
                 //This part combines the other states, because we shouldn't be able to do change the process in these states.
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
+                statusAlert.textContent = 'Unknown'; // Maybe change this to something else later
             }
             if (batch_id == -1) {
                 //This part disables the buttons if there is no batch running.
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
+                statusAlert.textContent = 'No batch running';
             }
         }
+
     });
+
+    let maintenanceMode = false;
+
+    //Function for showing and hiding the maintenance bar if the maintenance mode is on or off.
+    function toggleMaintenance() {
+        var maintenanceContainer = document.querySelector('.maintenanceContainer');
+        var maintenanceBar = document.querySelector('.maintenanceProgress');
+        var statusAlert = document.getElementById('statusAlert');
+
+        maintenanceMode = !maintenanceMode;
+        if (maintenanceMode) {
+            // Start maintenance mode
+            maintenanceBar.style.display = 'block';
+            statusAlert.textContent = 'Maintenanceing';
+            maintenanceBar.style.width = '0%';
+            maintenanceBar.classList.add('initialBarFill'); // Start initial fill animation to 30%
+
+            console.log("Maintenance mode started");
+
+            // Simulate loading in steps when ending the maintenance
+            maintenanceBar.addEventListener('animationend', function () {
+                setTimeout(() => incrementProgress(65), 500); // 65% after 0.5s, these are just random numbers.
+                setTimeout(() => incrementProgress(87), 1500); // 87% after 1.5s
+                setTimeout(() => incrementProgress(100), 3000); // 100% after 3s
+            }, { once: true });
+
+        } else {
+            // End maintenance mode
+            maintenanceContainer.style.display = 'none';
+
+            console.log("Maintenance mode ended");
+        }
+    }
+
+    // Function for incrementing the maintenance bar
+    function incrementProgress(newWidth) {
+        var maintenanceBar = document.querySelector('.maintenanceProgress');
+        if (maintenanceMode) {
+            maintenanceBar.style.width = `${newWidth}%`;
+        }
+    }
+
+    // SetInterval for testing the toggleMaintenance function
+    setInterval(toggleMaintenance, 5000);
 
 </script>

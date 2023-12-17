@@ -31,7 +31,7 @@ namespace Semester_3_Projekt.controller
         public JsonResult update_monitor()
         {
             md.clear_data();
-            md.BatchID = _beerMachineAPI.get_Current_BatchID();
+            md.BatchID = _beerMachineAPI.get_batch_id();
             var result = _beerMachineAPI.get_beer_type();
             md.BeerType = _dbGet.getProductName(Convert.ToInt32(result));
             md.Quantity = _beerMachineAPI.get_quantity();

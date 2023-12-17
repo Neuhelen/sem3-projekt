@@ -91,7 +91,7 @@
                 alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
             }
             });
-
+    });
         $(".startBtn").click(function () {
             button_actions("start");
         });
@@ -127,6 +127,7 @@
             var continueBtn = $(".continueBtn");
 
             //If the current state is "Stopped", then the Stop-button is disabled. 
+            /*
             if (state_current == 2) {
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
@@ -157,8 +158,9 @@
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
             }
+            */
         }
-    });
+    
 
 
 </script>

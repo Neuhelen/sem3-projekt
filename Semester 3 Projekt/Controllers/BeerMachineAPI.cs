@@ -158,7 +158,7 @@ namespace Semester_3_Projekt.controller
         {
             bool success = stop();
 
-            dbInsert.addLog(get_Current_BatchID(), "Manual Stop");
+            // dbInsert.addLog(get_Current_BatchID(), "Manual Stop");
 
             return success;
         }
@@ -169,19 +169,19 @@ namespace Semester_3_Projekt.controller
 
             if (stopCode == 10) {
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Empty inventory");
+                dbInsert.addLog(get_batch_id(), "Empty inventory");
                 success = true;
             } else if(stopCode == 11) {
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Maintenance needed");
+                dbInsert.addLog(get_batch_id(), "Maintenance needed");
                 success = true;
             } else if(stopCode == 13) {
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Motor power loss");
+                dbInsert.addLog(get_batch_id(), "Motor power loss");
                 success = true;
             } else if (stopCode == 14) {
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Manual abort");
+                dbInsert.addLog(get_batch_id(), "Manual abort");
                 success = true;
             }
 
@@ -201,7 +201,7 @@ namespace Semester_3_Projekt.controller
         {
             bool success = start(); 
 
-            dbInsert.addLog(get_Current_BatchID(), "Manual Start");
+           // dbInsert.addLog(get_Current_BatchID(), "Manual Start");
 
             return success;
         }
@@ -212,7 +212,7 @@ namespace Semester_3_Projekt.controller
         {
             bool success = start();
 
-            dbInsert.addLog(get_Current_BatchID(), "Manual Continue");
+             dbInsert.addLog(get_batch_id(), "Manual Continue");
 
             return success;
         }
@@ -220,7 +220,7 @@ namespace Semester_3_Projekt.controller
         //This function is used on the creation of a batch in order to set and log the input information. 
         public void batchCreation(string logMessage)
         {
-            dbInsert.addLog(get_Current_BatchID(), "Batch Creation", logMessage);
+            dbInsert.addLog(get_batch_id(), "Batch Creation", logMessage);
         }
 
         //This function is used on the completion of a batch in order to log the results. 
@@ -228,7 +228,7 @@ namespace Semester_3_Projekt.controller
         {
             if (get_state() == 17)
             {
-                dbInsert.addLog(get_Current_BatchID(), "Batch Completed", "The total amount of beer produced is: "
+                dbInsert.addLog(get_batch_id(), "Batch Completed", "The total amount of beer produced is: "
                 + get_produced() + ". The amount of successfull beer produced is: " + get_produced_good()
                 + ". The amount of failed beer produced is: " + get_produced_bad() + ".");
             }

@@ -60,15 +60,22 @@ namespace Semester_3_Projekt.controller
             //This part calls the function indicated by the given string. 
             switch (function)
             {
+                case "reset":
+                    _beerMachineAPI.reset();
+                    break;
                 case "start":
-                    _beerMachineAPI.start_batch();
+                    _beerMachineAPI.start();
                     break;
                 case "stop":
                     _beerMachineAPI.manual_stop();
                     break;
-                case "continue":
-                    _beerMachineAPI.continue_production();
+                case "abort":
+                    _beerMachineAPI.abort();
                     break;
+                case "clear":
+                    _beerMachineAPI.clear();
+                    break;
+
                 default:
                     return Json(new { success = false, message = "Invalid action" });
             }

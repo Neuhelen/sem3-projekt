@@ -48,9 +48,11 @@
 
     @*Start, stop, continue buttons*@
     <div class="secondBox">
+        <button class="resetBtn">Continue</button>
         <button class="startBtn">Start</button>
         <button class="stopBtn">Stop</button>
-        <button class="continueBtn">Continue</button>
+        <button class="abortBtn">Continue</button>
+        <button class="clearBtn">Continue</button>
     </div>
 
 </div>
@@ -92,6 +94,12 @@
             }
             });
     });
+
+    $(document).ready(function () {
+        $(".resetBtn").click(function () {
+            button_actions("reset");
+        });
+
         $(".startBtn").click(function () {
             button_actions("start");
         });
@@ -100,67 +108,69 @@
             button_actions("stop");
         });
 
-        $(".continueBtn").click(function () {
-            button_actions("continue");
+        $(".abortBtn").click(function () {
+            button_actions("abort");
         });
 
-        //This part uses the appropriate function in the Monitor Controller whenever a button is clicked in the Monitor Tab.
-        function button_actions(action) {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("button_actions")",
-                data: { function: action },
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
-                }
-            });
-        }
+        $(".clearBtn").click(function () {
+            button_actions("clear");
+        });
+    });
 
-        //This function enables and disables the buttons based on the Current State of the machine.
-        function updateButtonStates(state_current, batch_id) {
-            var startBtn = $(".startBtn");
-            var stopBtn = $(".stopBtn");
-            var continueBtn = $(".continueBtn");
-
-            //If the current state is "Stopped", then the Stop-button is disabled. 
-            /*
-            if (state_current == 2) {
-                startBtn.prop('disabled', true);
-                stopBtn.prop('disabled', true);
-                continueBtn.prop('disabled', false);
-            } else if (state_current == 6) {
-                //If the current state is "Execute", then the Stop-button is enabled and the other buttons are disabled.
-                startBtn.prop('disabled', true);
-                stopBtn.prop('disabled', false);
-                continueBtn.prop('disabled', true);
-            } else if (state_current == 4) {
-                //If the current state is "Idle", then the Stop-button is disabled and the other buttons are enabled.
-                startBtn.prop('disabled', false);
-                stopBtn.prop('disabled', true);
-                continueBtn.prop('disabled', false);
-            } else if (state_current == 9 || state_current == 17) {
-                //If the current state is "Aborted" or "Complete", then the Start-button is enabled and the other buttons are disabled.
-                startBtn.prop('disabled', false);
-                stopBtn.prop('disabled', true);
-                continueBtn.prop('disabled', true);
-            } else {
-                //This part combines the other states, because we shouldn't be able to do change the process in these states.
-                startBtn.prop('disabled', true);
-                stopBtn.prop('disabled', true);
-                continueBtn.prop('disabled', true);
+    //This part uses the appropriate function in the Monitor Controller whenever a button is clicked in the Monitor Tab.
+    function button_actions(action) {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("button_actions")",
+            data: { function: action },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
             }
-            if (batch_id == -1) {
-                startBtn.prop('disabled', true);
-                stopBtn.prop('disabled', true);
-                continueBtn.prop('disabled', true);
-            }
-            */
+        });
+    }
+
+    //This function enables and disables the buttons based on the Current State of the machine.
+    function updateButtonStates(state_current, batch_id) {
+        var startBtn = $(".startBtn");
+        var stopBtn = $(".stopBtn");
+        var continueBtn = $(".continueBtn");
+
+        //If the current state is "Stopped", then the Stop-button is disabled. 
+        /*
+        if (state_current == 2) {
+            startBtn.prop('disabled', true);
+            stopBtn.prop('disabled', true);
+            continueBtn.prop('disabled', false);
+        } else if (state_current == 6) {
+            //If the current state is "Execute", then the Stop-button is enabled and the other buttons are disabled.
+            startBtn.prop('disabled', true);
+            stopBtn.prop('disabled', false);
+            continueBtn.prop('disabled', true);
+        } else if (state_current == 4) {
+            //If the current state is "Idle", then the Stop-button is disabled and the other buttons are enabled.
+            startBtn.prop('disabled', false);
+            stopBtn.prop('disabled', true);
+            continueBtn.prop('disabled', false);
+        } else if (state_current == 9 || state_current == 17) {
+            //If the current state is "Aborted" or "Complete", then the Start-button is enabled and the other buttons are disabled.
+            startBtn.prop('disabled', false);
+            stopBtn.prop('disabled', true);
+            continueBtn.prop('disabled', true);
+        } else {
+            //This part combines the other states, because we shouldn't be able to do change the process in these states.
+            startBtn.prop('disabled', true);
+            stopBtn.prop('disabled', true);
+            continueBtn.prop('disabled', true);
         }
-    
-
-
+        if (batch_id == -1) {
+            startBtn.prop('disabled', true);
+            stopBtn.prop('disabled', true);
+            continueBtn.prop('disabled', true);
+        }
+        */
+    }
 </script>

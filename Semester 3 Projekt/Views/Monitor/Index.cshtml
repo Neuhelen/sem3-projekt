@@ -142,13 +142,13 @@
         //If the current state is "Stopped" or "Completed", 
         //then the Reset-button and the Start-button are enabled and the other buttons are disabled.
         /*
-        if (state_current == 2 || state_current == 17) {
+        if (state_current == "Stopped" || state_current == "Complete") {
             resetBtn.prop('disabled', false);
             startBtn.prop('disabled', false);
             stopBtn.prop('disabled', true);
             abortBtn.prop('disabled', true);
             clearBtn.prop('disabled', true);
-        } else if (state_current == 6) {
+        } else if (state_current == "Execute") {
             //If the current state is "Execute", 
             //then the Stop-button and the Abort-button are enabled and the other buttons are disabled.
             resetBtn.prop('disabled', true);
@@ -156,7 +156,7 @@
             stopBtn.prop('disabled', false);
             abortBtn.prop('disabled', false);
             clearBtn.prop('disabled', true);
-        } else if (state_current == 4) {
+        } else if (state_current == "Idle") {
             //If the current state is "Idle", 
             //then the Start-button is enabled and the other buttons are disabled.
             resetBtn.prop('disabled', true);
@@ -164,7 +164,7 @@
             stopBtn.prop('disabled', true);
             abortBtn.prop('disabled', true);
             clearBtn.prop('disabled', true);
-        } else if (state_current == 9) {
+        } else if (state_current == "Aborted") {
             //If the current state is "Aborted", 
             //then the Clear-button is enabled and the other buttons are disabled.
             resetBtn.prop('disabled', true);

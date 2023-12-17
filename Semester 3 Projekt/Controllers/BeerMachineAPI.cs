@@ -141,14 +141,13 @@ namespace Semester_3_Projekt.controller
         }
 
 
-
-
         DBInsert dbInsert = new DBInsert();
 
         //This function resets the production and logs it. 
         public bool reset()
         {
-            dbInsert.addLog(get_batch_id(), "Reset");
+            int battchID = get_batch_id();
+            if(battchID != 0) dbInsert.addLog(get_batch_id(), "Reset");
 
             bool success = common_post("Cube.Command.CntrlCmd", 1);
 
@@ -160,7 +159,7 @@ namespace Semester_3_Projekt.controller
         //This function starts the production and logs it. 
         public bool start()
         {
-            dbInsert.addLog(get_batch_id(), "Manual Start");
+            dbInsert.addLog(get_command_batch_id(), "Manual Start");
 
             bool success = common_post("Cube.Command.CntrlCmd", 2);
 
@@ -249,11 +248,11 @@ namespace Semester_3_Projekt.controller
         {
             if (get_state() == 17)
             {
-                dbInsert.addLog(get_batch_id(), "Batch Completed - Total Beer", get_produced());
+                dbInsert.addLog(get_batch_id(), "Total Beer", get_produced());
 
-                dbInsert.addLog(get_batch_id(), "Batch Completed - Successful Beer", get_produced_good());
+                dbInsert.addLog(get_batch_id(), "Successful Beer", get_produced_good());
 
-                dbInsert.addLog(get_batch_id(), "Batch Completed - Defective Beer", get_produced_bad());
+                dbInsert.addLog(get_batch_id(), "Defective Beer", get_produced_bad());
             }
         }
 
@@ -275,6 +274,11 @@ namespace Semester_3_Projekt.controller
             return (UInt16)batch_id.Value;
         }
 
+        public int get_command_batch_id()
+        {
+            var batch_id = common_get("Cube.Command.Parameter[0].Value");
+            return Convert.ToUInt16(batch_id.Value);
+        }
         public float get_machine_speed()
         {
             var machine_speed = common_get("Cube.Command.MachSpeed");

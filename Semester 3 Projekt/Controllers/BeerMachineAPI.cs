@@ -156,7 +156,6 @@ namespace Semester_3_Projekt.controller
 
         public bool manual_stop()
         {
-            Debug.WriteLine("API: stop works.");
             bool success = stop();
 
             dbInsert.addLog(get_Current_BatchID(), "Manual Stop");
@@ -200,7 +199,6 @@ namespace Semester_3_Projekt.controller
         }
         public bool start_batch()
         {
-            Debug.WriteLine("API: start works.");
             bool success = start(); 
 
             dbInsert.addLog(get_Current_BatchID(), "Manual Start");
@@ -212,7 +210,6 @@ namespace Semester_3_Projekt.controller
         //This function continues the production of the batch and logs it
         public bool continue_production()
         {
-            Debug.WriteLine("API: continue works.");
             bool success = start();
 
             dbInsert.addLog(get_Current_BatchID(), "Manual Continue");

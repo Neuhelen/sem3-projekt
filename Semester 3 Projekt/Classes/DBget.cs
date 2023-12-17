@@ -103,6 +103,17 @@ namespace Semester_3_Projekt.Classes
             return id;
         }
 
+        public int getBatchIdbySearch(int Id)
+        {
+            int id = -1;
+            var Batch = beerDB.Batchs.Where(b => b.Id == Id).ToList();
+            foreach (var item in Batch)
+            {
+                id = item.Id;
+            }
+            return id;
+        }
+
         public List<int> getAllBatchId()
         {
             List<int> ids = new List<int>();
@@ -113,6 +124,64 @@ namespace Semester_3_Projekt.Classes
                 {
                     b.Id
                 };
+            foreach (var item in query)
+            {
+                int id = item.Id;
+                ids.Add(id);
+            }
+            return ids;
+        }
+
+        public List<int> getAllBatchId(DateOnly date, Boolean after)
+        {
+            List<int> ids = new List<int>();
+            var Batch = beerDB.Batchs;
+            var query =
+                from b in Batch
+                select new
+                {
+                    b.Id
+                };
+            if (after)
+            {
+                query =
+                    from b in Batch
+                    where b.Date >= date
+                    select new
+                    {
+                        b.Id
+                    };
+            }
+            else
+            {
+                query =
+                    from b in Batch
+                    where b.Date == date
+                    select new
+                    {
+                        b.Id
+                    };
+            }
+
+            foreach (var item in query)
+            {
+                int id = item.Id;
+                ids.Add(id);
+            }
+            return ids;
+        }
+
+        public List<int> getAllBatchId(int ProductID)
+        {
+            List<int> ids = new List<int>();
+            var Batch = beerDB.Batchs;
+            var query = from b in Batch
+                    where b.ProductId == ProductID
+                    select new
+                    {
+                        b.Id
+                    };
+
             foreach (var item in query)
             {
                 int id = item.Id;

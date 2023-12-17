@@ -140,9 +140,33 @@ namespace Semester_3_Projekt.controller
             
         }
 
-        
 
         DBInsert dbInsert = new DBInsert();
+
+        //This function resets the production and logs it. 
+        public bool reset()
+        {
+            int battchID = get_batch_id();
+            if(battchID != 0) dbInsert.addLog(get_batch_id(), "Reset");
+
+            bool success = common_post("Cube.Command.CntrlCmd", 1);
+
+            common_post("Cube.Command.CmdChangeRequest", true);
+
+            return success;
+        }
+
+        //This function starts the production and logs it. 
+        public bool start()
+        {
+            dbInsert.addLog(get_command_batch_id(), "Manual Start");
+
+            bool success = common_post("Cube.Command.CntrlCmd", 2);
+
+            common_post("Cube.Command.CmdChangeRequest", true);
+
+            return success;
+        }
 
         //This function stops the production and logs it. 
         public bool stop()
@@ -154,11 +178,35 @@ namespace Semester_3_Projekt.controller
             return success;
         }
 
+        //This function aborts the production and logs it. 
+        public bool abort()
+        {
+            dbInsert.addLog(get_batch_id(), "Manual Abort");
+
+            bool success = common_post("Cube.Command.CntrlCmd", 4);
+
+            common_post("Cube.Command.CmdChangeRequest", true);
+
+            return success;
+        }
+
+        //This function clears the production and logs it. 
+        public bool clear()
+        {
+            dbInsert.addLog(get_batch_id(), "Manual Clear");
+
+            bool success = common_post("Cube.Command.CntrlCmd", 5);
+
+            common_post("Cube.Command.CmdChangeRequest", true);
+
+            return success;
+        }
+
         public bool manual_stop()
         {
-            bool success = stop();
+            dbInsert.addLog(get_batch_id(), "Manual Stop");
 
-            dbInsert.addLog(get_Current_BatchID(), "Manual Stop");
+            bool success = stop();
 
             return success;
         }
@@ -167,60 +215,32 @@ namespace Semester_3_Projekt.controller
         {
             bool success = false;
 
-            if (stopCode == 10) {
+            if (stopCode == 10)
+            {
+                dbInsert.addLog(get_batch_id(), "Empty inventory");
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Empty inventory");
                 success = true;
-            } else if(stopCode == 11) {
+            }
+            else if (stopCode == 11)
+            {
+                dbInsert.addLog(get_batch_id(), "Maintenance needed");
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Maintenance needed");
                 success = true;
-            } else if(stopCode == 13) {
+            }
+            else if (stopCode == 13)
+            {
+                dbInsert.addLog(get_batch_id(), "Motor power loss");
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Motor power loss");
                 success = true;
-            } else if (stopCode == 14) {
+            }
+            else if (stopCode == 14)
+            {
+                dbInsert.addLog(get_batch_id(), "Manual abort");
                 stop();
-                dbInsert.addLog(get_Current_BatchID(), "Manual abort");
                 success = true;
             }
 
             return success;
-        }
-
-        //This function starts the production. 
-        public bool start()
-        {
-            bool success = common_post("Cube.Command.CntrlCmd", 2);
-
-            common_post("Cube.Command.CmdChangeRequest", true);
-
-            return success;
-        }
-        public bool start_batch()
-        {
-            bool success = start(); 
-
-            dbInsert.addLog(get_Current_BatchID(), "Manual Start");
-
-            return success;
-        }
-
-
-        //This function continues the production of the batch and logs it
-        public bool continue_production()
-        {
-            bool success = start();
-
-            dbInsert.addLog(get_Current_BatchID(), "Manual Continue");
-
-            return success;
-        }
-
-        //This function is used on the creation of a batch in order to set and log the input information. 
-        public void batchCreation(string logMessage)
-        {
-            dbInsert.addLog(get_Current_BatchID(), "Batch Creation", logMessage);
         }
 
         //This function is used on the completion of a batch in order to log the results. 
@@ -228,9 +248,11 @@ namespace Semester_3_Projekt.controller
         {
             if (get_state() == 17)
             {
-                dbInsert.addLog(get_Current_BatchID(), "Batch Completed", "The total amount of beer produced is: "
-                + get_produced() + ". The amount of successfull beer produced is: " + get_produced_good()
-                + ". The amount of failed beer produced is: " + get_produced_bad() + ".");
+                dbInsert.addLog(get_batch_id(), "Total Beer", get_produced());
+
+                dbInsert.addLog(get_batch_id(), "Successful Beer", get_produced_good());
+
+                dbInsert.addLog(get_batch_id(), "Defective Beer", get_produced_bad());
             }
         }
 
@@ -252,6 +274,11 @@ namespace Semester_3_Projekt.controller
             return (UInt16)batch_id.Value;
         }
 
+        public int get_command_batch_id()
+        {
+            var batch_id = common_get("Cube.Command.Parameter[0].Value");
+            return Convert.ToUInt16(batch_id.Value);
+        }
         public float get_machine_speed()
         {
             var machine_speed = common_get("Cube.Command.MachSpeed");

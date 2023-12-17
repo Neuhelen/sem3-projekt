@@ -20,6 +20,7 @@ namespace Semester_3_Projekt.Controllers
             return (username == "admin" && password == "admin");
         }
 
+        //Login
         public IActionResult Index()
         {
             return View();
@@ -50,11 +51,18 @@ namespace Semester_3_Projekt.Controllers
             return View("Index");
         }
 
+        // Logout
+        public IActionResult Logout()
+        {
+            return View(); // Returns the logout view
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> PerformLogout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Index", "Login"); // Redirect to the Login page
         }
     }
+}
 }

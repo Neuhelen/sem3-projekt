@@ -1,4 +1,4 @@
-﻿@*
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -108,7 +108,7 @@
                 alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
             }
             });
-
+    });
         $(".startBtn").click(function () {
             button_actions("start");
         }
@@ -144,6 +144,7 @@
             document.getElementById('startBtn').addEventListener('click', toggleMaintenance);
 
             //If the current state is "Stopped", then the Stop-button is disabled. 
+            /*
             if (state_current == 2) {
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
@@ -184,9 +185,10 @@
                 continueBtn.prop('disabled', true);
                 statusAlert.textContent = 'No batch running';
             }
+            */
         }
-
     });
+
 
     let maintenanceMode = false;
 

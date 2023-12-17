@@ -20,7 +20,7 @@ namespace Semester_3_Projekt.Models
         public float MaltAmount { get; set; }
         public float WheatAmount { get; set; }
         public float YeastAmount { get; set; }
-        public int State { get; set; }
+        public string State { get; set; }
         public int StopReason { get; set; }
 
         public void clear_data()
@@ -37,7 +37,7 @@ namespace Semester_3_Projekt.Models
             this.HopsAmount = 0;
             this.WheatAmount = 0;
             this.YeastAmount = 0;
-            this.State = 0;
+            this.State = "Idle";
             this.StopReason = 0;
         }
     

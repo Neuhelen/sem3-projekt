@@ -45,13 +45,73 @@ namespace Semester_3_Projekt.controller
             md.MaltAmount = _beerMachineAPI.get_Ingredient_Amount("Malt");
             md.WheatAmount = _beerMachineAPI.get_Ingredient_Amount("Wheat");
             md.YeastAmount = _beerMachineAPI.get_Ingredient_Amount("Yeast");
-            md.State = _beerMachineAPI.get_state();
+            md.State = GetState();
             md.StopReason = _beerMachineAPI.get_Stop_Reason();
 
             _beerMachineAPI.stop_check(_beerMachineAPI.get_Stop_Reason());
-            _beerMachineAPI.logSuccess(); 
 
             return new JsonResult(Ok(md));
+        }
+
+        public string GetState ()
+        {
+            string state = "not active";
+            switch (_beerMachineAPI.get_state())
+            {
+                case 0:
+                    state = "Deactivated";
+                    break;
+                case 1:
+                    state = "Clearing";
+                    break;
+                case 2:
+                    state = "Stopped";
+                    break;
+                case 3:
+                    state = "Starting";
+                    break;
+                case 4:
+                    state = "Idle";
+                    break;
+                case 5:
+                    state = "Suspended";
+                    break;
+                case 6:
+                    state = "Excute";
+                    break;
+                case 7:
+                    state = "Stopping";
+                    break;
+                case 8:
+                    state = "Aborting";
+                    break;
+                case 9:
+                    state = "Aborted";
+                    break;
+                case 10:
+                    state = "Holding";
+                    break;
+                case 11:
+                    state = "Held";
+                    break;
+                case 15:
+                    state = "Resetting";
+                    break;
+                case 16:
+                    state = "Completing";
+                    break;
+                case 17:
+                    state = "Complete";
+                    break;
+                case 18:
+                    state = "Deactivating";
+                    break;
+                case 19:
+                    state = "Activating";
+                    break;
+            }
+
+            return state;
         }
 
         [HttpGet]
@@ -60,15 +120,23 @@ namespace Semester_3_Projekt.controller
             //This part calls the function indicated by the given string. 
             switch (function)
             {
+                case "reset":
+                    _beerMachineAPI.logSuccess();
+                    _beerMachineAPI.reset();
+                    break;
                 case "start":
-                    _beerMachineAPI.start_batch();
+                    _beerMachineAPI.start();
                     break;
                 case "stop":
                     _beerMachineAPI.manual_stop();
                     break;
-                case "continue":
-                    _beerMachineAPI.continue_production();
+                case "abort":
+                    _beerMachineAPI.abort();
                     break;
+                case "clear":
+                    _beerMachineAPI.clear();
+                    break;
+
                 default:
                     return Json(new { success = false, message = "Invalid action" });
             }

@@ -44,7 +44,7 @@
             <option value="3">3</option>
         </select>
     </div>
-
+    <div class="dropDownBatch" name="statusAlert"><label name="statusAlert" id="statusAlert">State: </label></div>
     @*Monitoring*@
     <div class="infoBoxes">
         <div class="box"><label name="batchId" id="batchId">Batch ID: </label></div>
@@ -66,9 +66,11 @@
 
     @*Start, stop, continue buttons*@
     <div class="secondBox">
+        <button class="resetBtn">Reset</button>
         <button class="startBtn">Start</button>
         <button class="stopBtn">Stop</button>
-        <button class="continueBtn">Continue</button>
+        <button class="abortBtn">Abort</button>
+        <button class="clearBtn">Clear</button>
     </div>
 
 </div>
@@ -109,39 +111,49 @@
             }
             });
     });
+
+    $(document).ready(function () {
+        $(".resetBtn").click(function () {
+            button_actions("reset");
+        });
+
         $(".startBtn").click(function () {
             button_actions("start");
         }
         $(".stopBtn").click(function () {
             button_actions("stop");
         });
-        $(".continueBtn").click(function () {
-            button_actions("continue");
+
+        $(".abortBtn").click(function () {
+            button_actions("abort");
         });
 
-        //This part uses the appropriate function in the Monitor Controller whenever a button is clicked in the Monitor Tab.
-        function button_actions(action) {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("button_actions")",
-                data: { function: action },
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
-                }
-            });
-        }
+        $(".clearBtn").click(function () {
+            button_actions("clear");
+        });
+    });
 
-        //This function enables and disables the buttons and show status based on the Current State of the machine.
+    //This part uses the appropriate function in the Monitor Controller whenever a button is clicked in the Monitor Tab.
+    function button_actions(action) {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("button_actions")",
+            data: { function: action },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+            }
+        });
+    }
+
+        //This function enables and disables the buttons based on the Current State of the machine.
         function updateButtonStates(state_current, batch_id) {
             var startBtn = $(".startBtn");
             var stopBtn = $(".stopBtn");
             var continueBtn = $(".continueBtn");
-
-            document.getElementById('startBtn').addEventListener('click', toggleMaintenance);
 
             //If the current state is "Stopped", then the Stop-button is disabled. 
             /*
@@ -164,71 +176,20 @@
                 startBtn.prop('disabled', false);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
-                statusAlert.textContent = 'Aborted';
-            } else -if (state_current == 17) {
-                //If the current state is "Complete", then the Start-button is enabled and the other buttons are disabled.
-                startBtn.prop('disabled', false);
-                stopBtn.prop('disabled', true);
-                continueBtn.prop('disabled', true);
-                statusAlert.textContent = 'Complete';
             } else {
                 //This part combines the other states, because we shouldn't be able to do change the process in these states.
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
-                statusAlert.textContent = 'Unknown'; // Maybe change this to something else later
             }
             if (batch_id == -1) {
-                //This part disables the buttons if there is no batch running.
                 startBtn.prop('disabled', true);
                 stopBtn.prop('disabled', true);
                 continueBtn.prop('disabled', true);
-                statusAlert.textContent = 'No batch running';
             }
             */
         }
-    });
+    
 
-
-    let maintenanceMode = false;
-
-    //Function for showing and hiding the maintenance bar if the maintenance mode is on or off.
-    function toggleMaintenance() {
-        var maintenanceContainer = document.querySelector('.maintenanceContainer');
-        var maintenanceBar = document.querySelector('.maintenanceProgress');
-        var statusAlert = document.getElementById('statusAlert');
-
-        maintenanceMode = !maintenanceMode;
-        if (maintenanceMode) {
-            // Start maintenance mode
-            maintenanceBar.style.display = 'block';
-            statusAlert.textContent = 'Maintenanceing';
-            maintenanceBar.style.width = '0%';
-            maintenanceBar.classList.add('initialBarFill'); // Start initial fill animation to 30%
-
-            console.log("Maintenance mode started");
-
-            // Simulate loading in steps when ending the maintenance
-            maintenanceBar.addEventListener('animationend', function () {
-                setTimeout(() => incrementProgress(65), 500); // 65% after 0.5s, these are just random numbers.
-                setTimeout(() => incrementProgress(87), 1500); // 87% after 1.5s
-                setTimeout(() => incrementProgress(100), 3000); // 100% after 3s
-            }, { once: true });
-
-        } else {
-            // End maintenance mode
-            maintenanceContainer.style.display = 'none';
-
-            console.log("Maintenance mode ended");
-        }
-    }
-
-    // Function for incrementing the maintenance bar
-    function incrementProgress(newWidth) {
-        var maintenanceBar = document.querySelector('.maintenanceProgress');
-        if (maintenanceMode) {
-            maintenanceBar.style.width = `${newWidth}%`;
-        }
-    }
 
 </script>

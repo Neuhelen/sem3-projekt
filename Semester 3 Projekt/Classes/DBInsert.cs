@@ -113,6 +113,7 @@ namespace Semester_3_Projekt.Classes
             BeerDB.BatchLogs.Add(log);
             BeerDB.SaveChanges();
         }
+
         public void addLog(int BatchID, string Event, string Description)
         {
             DateTime dateTime = DateTime.Now;
@@ -126,6 +127,7 @@ namespace Semester_3_Projekt.Classes
             BeerDB.BatchLogs.Add(log);
             BeerDB.SaveChanges();
         }
+
         public void addLog(int BatchID, string Event, int Value)
         {
             DateTime dateTime = DateTime.Now;
@@ -139,6 +141,7 @@ namespace Semester_3_Projekt.Classes
             BeerDB.BatchLogs.Add(log);
             BeerDB.SaveChanges();
         }
+
         public void addLog(int BatchID, string Event, string Description, int Value)
         {
             DateTime dateTime = DateTime.Now;
@@ -148,6 +151,20 @@ namespace Semester_3_Projekt.Classes
                 Event_Type = Event,
                 Description = Description,
                 Value = Value,
+                Time = TimeOnly.FromDateTime(dateTime)
+            };
+            BeerDB.BatchLogs.Add(log);
+            BeerDB.SaveChanges();
+        }
+
+        public void addLog(int BatchID, string Event, double Value)
+        {
+            DateTime dateTime = DateTime.Now;
+            Batch_Log log = new Batch_Log()
+            {
+                BatchId = BatchID,
+                Event_Type = Event,
+                dValue = Value,
                 Time = TimeOnly.FromDateTime(dateTime)
             };
             BeerDB.BatchLogs.Add(log);

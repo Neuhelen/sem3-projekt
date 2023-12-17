@@ -55,14 +55,18 @@
                                 {
                                     if (Rows.Name == log.Event_Type)
                                     {
-                                        if (log.Value > 0)
+                                        if (log.Value >= 0)
                                         {
                                             <th class="BatchCells">@log.Value</th>
                                         }/*
-                                                        else if (log.Description != null)
-                                                        {
-                                                            <th class="BatchCells">@log.Description</th>
-                                                        }*/
+                                        else if (log.Description != null)
+                                        {
+                                            <th class="BatchCells">@log.Description</th>
+                                        }*/
+                                        else if (log.dValue != null)
+                                        {
+                                            <th class="BatchCells">@log.dValue</th>
+                                        }
                                         else
                                         {
                                             <th class="BatchCells">@log.Time</th>

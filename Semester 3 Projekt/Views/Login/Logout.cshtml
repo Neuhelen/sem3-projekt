@@ -9,43 +9,55 @@
 
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Arial', sans-serif;
         background-color: #f4f4f4;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+        color: #333;
+        line-height: 1.6;
     }
 
-    .logout-container {
-        background-color: white;
+    .heroContainer {
+        max-width: 500px;
+        margin: 20px auto;
         padding: 20px;
+        text-align: center;
+        background-color: #fff;
         border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #333;
-        color: white;
+    h2 {
+        color: #444;
+    }
+
+    .logoutBtn {
         border: none;
-        border-radius: 4px;
+        padding: 10px 15px;
         cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s;
+        border-radius: 5px;
+        color: white;
+        background-color: #f44336;
     }
 
-    button:hover {
-        background-color: #555;
-    }
+        .logoutBtn:hover {
+            opacity: 0.9;
+        }
+
+        .logoutBtn:active {
+            transform: translateY(2px);
+        }
 </style>
 
 
 <body>
     @*Logout form, you see this when you are logged in and click the logout button in the navbar*@
-    <div class="logout-container">
-        <form id="logoutForm">
+    <div class="heroContainer">
             <h2>Logout</h2>
-            <button type="submit">Logout</button>
+            <p>Are you sure you want to logout?</p>
+            <form action="/Login/PerformLogout" method="post">
+                <!-- Update the action URL as necessary -->
+                <button type="submit" class="logoutBtn">Logout</button>
         </form>
     </div>
 </body>

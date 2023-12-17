@@ -8,19 +8,11 @@ namespace Semester_3_Projekt.Controllers
 {
     public class LoginController : Controller
     {
-        private bool ValidateUser(string username, string password)
-        {
-            // Check if the username and password match a stored user, check against a database or other user store
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            {
-                   return false;
-            }
-
-            // Placeholder logic for demonstration
-            return (username == "admin" && password == "admin");
-        }
+        private const string HardcodedUsername = "admin";
+        private const string HardcodedPassword = "admin";
 
         //Login
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -29,13 +21,12 @@ namespace Semester_3_Projekt.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            if (ValidateUser(username, password))
+            if (username == HardcodedUsername && password == HardcodedPassword)
             {
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, username),
-                    // Add other claims as needed
-                };
+            {
+                new Claim(ClaimTypes.Name, username)
+            };
 
                 var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -64,5 +55,4 @@ namespace Semester_3_Projekt.Controllers
             return RedirectToAction("Index", "Login"); // Redirect to the Login page
         }
     }
-}
 }

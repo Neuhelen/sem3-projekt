@@ -112,6 +112,10 @@ h1 {
         color: white;
     }
 
+.resetBtn {
+    background-color: #ffc404;
+}
+
 .startBtn {
     background-color: #4CAF50;
 }
@@ -120,8 +124,12 @@ h1 {
     background-color: #f44336;
 }
 
-.continueBtn {
-    background-color: #ff9800;
+.abortBtn {
+    background-color: #f44336;
+}
+
+.clearBtn {
+    background-color: #ffc404;
 }
 
 .secondBox > button:hover {

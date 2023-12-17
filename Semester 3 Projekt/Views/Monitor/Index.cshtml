@@ -13,8 +13,6 @@
 
 <h1>Monitor tab CONTROLLER</h1>
 
-<div class="alertPopup" id="statusAlert">Status: Idle</div>
-
 <div class="heroContainer">
 
     @*Dropdown for batch ID*@
@@ -26,7 +24,7 @@
             <option value="3">3</option>
         </select>
     </div>
-
+    <div class="dropDownBatch" name="statusAlert"><label name="statusAlert" id="statusAlert">State: </label></div>
     @*Monitoring*@
     <div class="infoBoxes">
         <div class="box"><label name="batchId" id="batchId">Batch id: </label></div>
@@ -48,11 +46,11 @@
 
     @*Start, stop, continue buttons*@
     <div class="secondBox">
-        <button class="resetBtn">Continue</button>
+        <button class="resetBtn">Reset</button>
         <button class="startBtn">Start</button>
         <button class="stopBtn">Stop</button>
-        <button class="abortBtn">Continue</button>
-        <button class="clearBtn">Continue</button>
+        <button class="abortBtn">Abort</button>
+        <button class="clearBtn">Clear</button>
     </div>
 
 </div>
@@ -141,21 +139,21 @@
 
         //If the current state is "Stopped", then the Stop-button is disabled. 
         /*
-        if (state_current == 2) {
+        if (state_current == "Stopped") {
             startBtn.prop('disabled', true);
             stopBtn.prop('disabled', true);
             continueBtn.prop('disabled', false);
-        } else if (state_current == 6) {
+        } else if (state_current == "Execute") {
             //If the current state is "Execute", then the Stop-button is enabled and the other buttons are disabled.
             startBtn.prop('disabled', true);
             stopBtn.prop('disabled', false);
             continueBtn.prop('disabled', true);
-        } else if (state_current == 4) {
+        } else if (state_current == "Idle") {
             //If the current state is "Idle", then the Stop-button is disabled and the other buttons are enabled.
             startBtn.prop('disabled', false);
             stopBtn.prop('disabled', true);
             continueBtn.prop('disabled', false);
-        } else if (state_current == 9 || state_current == 17) {
+        } else if (state_current == "Aborted" || state_current == "Complete") {
             //If the current state is "Aborted" or "Complete", then the Start-button is enabled and the other buttons are disabled.
             startBtn.prop('disabled', false);
             stopBtn.prop('disabled', true);

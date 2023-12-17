@@ -53,19 +53,23 @@
                             {
                                 foreach (BatchRows Rows in ViewBag.BatchRows)
                                 {
-                                    if (Rows.Name == log.Event_Type)
+                                    //List<string> names = new List<string>();
+                                    if (Rows.Name == log.Event_Type)// && names.Contains(Rows.Name))
                                     {
-                                        if (log.Value > 0)
+                                        if (log.Value >= 0)
                                         {
                                             <th class="BatchCells">@log.Value</th>
+                                            //names.Add(Rows.Name);
                                         }/*
-                                                        else if (log.Description != null)
-                                                        {
-                                                            <th class="BatchCells">@log.Description</th>
-                                                        }*/
+                                            else if (log.Description != null)
+                                            {
+                                                <th class="BatchCells">@log.Description</th>
+                                                names.Add(Rows.Name);
+                                            }*/
                                         else
                                         {
                                             <th class="BatchCells">@log.Time</th>
+                                            //names.Add(Rows.Name);
                                         }
                                     }
                                 }

@@ -49,7 +49,6 @@ namespace Semester_3_Projekt.controller
             md.StopReason = _beerMachineAPI.get_Stop_Reason();
 
             _beerMachineAPI.stop_check(_beerMachineAPI.get_Stop_Reason());
-            _beerMachineAPI.logSuccess(); 
 
             return new JsonResult(Ok(md));
         }
@@ -61,6 +60,7 @@ namespace Semester_3_Projekt.controller
             switch (function)
             {
                 case "reset":
+                    _beerMachineAPI.logSuccess();
                     _beerMachineAPI.reset();
                     break;
                 case "start":

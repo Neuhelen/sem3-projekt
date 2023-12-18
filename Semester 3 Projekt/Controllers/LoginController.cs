@@ -3,22 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
-using Semester_3_Projekt.Classes;
-using System.Text;
 
 namespace Semester_3_Projekt.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly DBget _dbGet;
-
         private const string HardcodedUsername = "admin";
         private const string HardcodedPassword = "admin";
-
-        public LoginController()
-        {
-            _dbGet = new DBget();
-        }
 
         //Login
         [HttpGet]
@@ -30,13 +21,12 @@ namespace Semester_3_Projekt.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            var user = _dbGet.GetUserByUsername(username);
-            if (user != null && VerifyPassword(password, user.PasswordHash))
+            if (username == HardcodedUsername && password == HardcodedPassword)
             {
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, username)
-                };
+            {
+                new Claim(ClaimTypes.Name, username)
+            };
 
                 var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -45,32 +35,24 @@ namespace Semester_3_Projekt.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity));
 
-                return RedirectToAction("Index", "Monitor"); // Redirect to the Monitor page if credentials are correct
+                return RedirectToAction("Index", "Monitor");
             }
 
             ViewBag.ErrorMessage = "Invalid username or password";
-            return View("Index"); // Stay on the login page if credentials are wrong
+            return View("Index");
         }
 
-        //Verify the password with the stored hash in the database 
-        private bool VerifyPassword(string password, string storedHash)
+        // Logout
+        public IActionResult Logout()
         {
-            var hashedPassword = HashPassword(password);
-            return hashedPassword == storedHash;
+            return View(); // Returns the logout view
         }
 
-        //Hash the password
-        private string HashPassword(string password)
-        {
-            return Convert.ToBase64String(System.Security.Cryptography.SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(password)));
-        }
-
-        //Logout
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> PerformLogout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Login"); // Redirect to the Login page after logout
+            return RedirectToAction("Index", "Login"); // Redirect to the Login page
         }
     }
 }

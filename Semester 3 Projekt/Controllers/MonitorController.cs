@@ -77,7 +77,7 @@ namespace Semester_3_Projekt.controller
                     state = "Suspended";
                     break;
                 case 6:
-                    state = "Excute";
+                    state = "Execute";
                     break;
                 case 7:
                     state = "Stopping";
@@ -121,19 +121,24 @@ namespace Semester_3_Projekt.controller
             switch (function)
             {
                 case "reset":
+                    Debug.WriteLine("case reset works.");
                     _beerMachineAPI.logSuccess();
                     _beerMachineAPI.reset();
                     break;
                 case "start":
+                    Debug.WriteLine("case start works.");
                     _beerMachineAPI.start();
                     break;
                 case "stop":
+                    Debug.WriteLine("case stop works.");
                     _beerMachineAPI.manual_stop();
                     break;
                 case "abort":
+                    Debug.WriteLine("case abort works.");
                     _beerMachineAPI.abort();
                     break;
                 case "clear":
+                    Debug.WriteLine("case clear works.");
                     _beerMachineAPI.clear();
                     break;
 

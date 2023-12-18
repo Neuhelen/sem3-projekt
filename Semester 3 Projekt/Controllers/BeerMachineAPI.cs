@@ -146,8 +146,7 @@ namespace Semester_3_Projekt.controller
         //This function resets the production and logs it. 
         public bool reset()
         {
-            int battchID = get_batch_id();
-            if(battchID != 0) dbInsert.addLog(get_batch_id(), "Reset");
+            if(get_batch_id() != 0) dbInsert.addLog(get_batch_id(), "Reset");
 
             bool success = common_post("Cube.Command.CntrlCmd", 1);
 
@@ -159,11 +158,15 @@ namespace Semester_3_Projekt.controller
         //This function starts the production and logs it. 
         public bool start()
         {
-            dbInsert.addLog(get_command_batch_id(), "Manual Start");
+            bool success = false;
+            if (get_command_batch_id() != 0)
+            {
+                dbInsert.addLog(get_command_batch_id(), "Manual Start");
 
-            bool success = common_post("Cube.Command.CntrlCmd", 2);
+                success = common_post("Cube.Command.CntrlCmd", 2);
 
-            common_post("Cube.Command.CmdChangeRequest", true);
+                common_post("Cube.Command.CmdChangeRequest", true);
+            }
 
             return success;
         }

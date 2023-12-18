@@ -139,12 +139,11 @@
         var abortBtn = $(".abortBtn");
         var clearBtn = $(".clearBtn");
 
-        //If the current state is "Stopped" or "Completed", 
-        //then the Reset-button and the Start-button are enabled and the other buttons are disabled.
-        /*
+        //If the current state is "Stopped" or "Complete", 
+        //then the Reset-button is enabled and the other buttons are disabled.
         if (state_current == "Stopped" || state_current == "Complete") {
             resetBtn.prop('disabled', false);
-            startBtn.prop('disabled', false);
+            startBtn.prop('disabled', true);
             stopBtn.prop('disabled', true);
             abortBtn.prop('disabled', true);
             clearBtn.prop('disabled', true);
@@ -188,6 +187,5 @@
             abortBtn.prop('disabled', true);
             clearBtn.prop('disabled', true);
         }
-        */
     }
 </script>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.Features;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Semester_3_Projekt.Classes;
@@ -7,6 +8,7 @@ using Semester_3_Projekt.Models;
 
 namespace Semester_3_Projekt.Controllers
 {
+    [Authorize]
     public class ProductionController : Controller
     {
         public List<ProductListValue> ProductList { get; set; }

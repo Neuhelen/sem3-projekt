@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
 using NuGet.Protocol;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 
 namespace Semester_3_Projekt.controller
 {
+    [Authorize]
     public class MonitorController : Controller
     {
         private BeerMachineAPI _beerMachineAPI;

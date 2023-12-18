@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1;
 using Semester_3_Projekt.Classes;
 using Semester_3_Projekt.controller;
@@ -6,6 +7,7 @@ using Semester_3_Projekt.Models;
 
 namespace Semester_3_Projekt.Controllers
 {
+    [Authorize]
     public class AnalyticsController : Controller
     {
 		private DBget BeerGet;

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews(); // Changed from AddRazorPages() to AddControllersWithViews()
 
 // Cookie authentication services
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -37,7 +37,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Monitor}/{action=Index}"
-    );
+    // defalt route to login page
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

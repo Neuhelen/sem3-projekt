@@ -51,6 +51,12 @@ namespace Semester_3_Projekt.Classes
             return queryProducts;
         }
 
+        public User GetUserByUsername(string username)
+        {
+            return beerDB.Users.FirstOrDefault(u => u.Username == username);
+        }
+
+
         public int getProductId (string Name)
         {
             var product = beerDB.Products.Where(p => p.pName.Contains(Name)).ToList();

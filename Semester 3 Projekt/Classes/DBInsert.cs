@@ -139,7 +139,8 @@ namespace Semester_3_Projekt.Classes
                 Time = TimeOnly.FromDateTime(dateTime)
             };
             BeerDB.BatchLogs.Add(log);
-            BeerDB.SaveChanges();
+            BeerGet = new DBget();
+            if (BeerGet.GetBatchLogs(BatchID).Count != 0) BeerDB.SaveChanges();
         }
 
         public void addLog(int BatchID, string Event, string Description, int Value)

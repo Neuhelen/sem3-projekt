@@ -119,7 +119,6 @@ namespace Semester_3_Projekt.Controllers
             }
 
             ViewBag.BatchTables = CreateTableList(batchRows, batchlogs.OrderBy(b => b.Batch.Id).ToList());
-            //ViewBag.Batchlogs = batchlogs.OrderBy(b => b.Batch.Id).ToList();
             ViewBag.BatchRows = batchRows;
         }
 
@@ -165,7 +164,7 @@ namespace Semester_3_Projekt.Controllers
                                 else if (log.dValue >= 0)
                                 {
                                     if(BRow.Name == "Success Rate") batchCol.Value = log.dValue+"%";
-                                    else batchCol.Value = "" + log.dValue;
+                                    else batchCol.Value = log.dValue.ToString();
                                 }
                                 //else if (log.Description != "") batchTable.Value = log.Description;
                                 else batchCol.Value = log.Time.ToString();

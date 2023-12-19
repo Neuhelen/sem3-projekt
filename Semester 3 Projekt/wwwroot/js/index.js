@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Example logic to update maintenance bar
     function updateMaintenanceBar() {
-        let progress = calculateMaintenanceProgress(); // Implement this function based on your logic
+        let progress = calculateMaintenanceProgress();
         let maintenanceBar = document.getElementById('maintenanceProgress');
         let maintenanceStatus = document.getElementById('maintenanceStatus');
 
@@ -58,6 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Call this function based on specific triggers or intervals
+
     updateMaintenanceBar();
 });

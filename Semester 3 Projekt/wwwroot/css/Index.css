@@ -1,3 +1,4 @@
+
 /* Global Styles */
 body {
     font-family: 'Arial', sans-serif;
@@ -15,7 +16,7 @@ body {
 /* Header Styles */
 h1 {
     color: #444;
-    margin-bottom: 20px;
+    margin-bottom: 5x;
     text-align: center;
 }
 
@@ -27,45 +28,97 @@ h1 {
     text-align: center;
 }
 
-/* Dropdown and Batch Display */
-.dropDownBatch, .currentBatchDisplay {
+/* Alert, Dropdown and Current Batch */
+.alertStatus, .dropDownBatch, .currentBatchDisplay {
     background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 8px;
+    margin-bottom: 12px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-weight: bold;
 }
 
-.currentBatchDisplay {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 16px;
+/* Alert Status */
+.alertStatus {
+    position: relative;
+    background-color: yellow;
+    color: black;
+    background-clip: padding-box;
+    box-shadow: none;
+    border-radius: 0;
+}
+/* Alert Status Yellow and Black Stripes */
+.alertStatus::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    z-index: -1;
+    background: repeating-linear-gradient( 45deg, yellow, yellow 7px, black 7px, black 14px);
 }
 
+/* Maintenance Bar Container */
 .maintenanceContainer {
-    margin-top: 20px;
-    padding: 10px;
+    width: 100%;
     background-color: #f2f2f2;
     border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    display: none; /* Hides the bar until the maintenance status is set to true */
 }
-
+/* Maintenance Bar*/
 .maintenanceBar {
-    width: 100%;
     background-color: #ddd;
-}
-
-.maintenanceProgress {
-    height: 20px;
-    background-color: #4CAF50;
-    width: 0%; /* Adjust based on maintenance needs */
+    width: 100%;
+    overflow: hidden;
     border-radius: 5px;
+    height: 20px;
+    position: relative;
+}
+/*Maintenance Bar Animation */
+.maintenanceProgress {
+    background-color: orangered;
+    background-image: linear-gradient( 45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2) 75%, transparent 75%, transparent );
+    background-size: 40px 40px; /* Size of the checkered pattern */
+    animation: moveBackground 2s linear infinite; /* Moving background */
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+/* Text on the maintenance bar */
+.maintenanceText {
+    position: absolute;
+    color: #000;
+    line-height: 20px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    font-weight: bold;
+}
+/* The illustration of the maintenance bar */
+/* Initial animation for the bar filling from 0 to 30% */
+@keyframes fillTo30 {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 30%;
+    }
+}
+/* Class to apply the initial animation */
+.initialFill {
+    animation: fillTo30 2s ease-out forwards; /* 'forwards' will keep the state at 30% after animation ends */
 }
 
-#maintenanceStatus {
-    margin-top: 10px;
-    display: block;
-}
 
 /* Dropdown Label */
 .dropDownBatch label {
@@ -98,19 +151,19 @@ h1 {
 .secondBox {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-    /* Buttons */
-    .secondBox > button {
-        border: none;
-        padding: 10px 15px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.2s;
-        border-radius: 5px;
-        color: white;
-    }
+/* Buttons */
+.secondBox > button {
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    border-radius: 5px;
+    color: white;
+}
 
 .resetBtn {
     background-color: #ffc404;

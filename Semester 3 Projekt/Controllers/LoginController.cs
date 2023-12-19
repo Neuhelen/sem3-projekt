@@ -11,12 +11,14 @@ namespace Semester_3_Projekt.Controllers
     public class LoginController : Controller
     {
         private readonly DBget _dbGet;
+        public DBInsert dBInsert;
 
         private const string HardcodedUsername = "admin";
         private const string HardcodedPassword = "admin";
 
         public LoginController()
         {
+            dBInsert = new DBInsert();
             _dbGet = new DBget();
         }
 
@@ -24,6 +26,7 @@ namespace Semester_3_Projekt.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            dBInsert.addUser(HardcodedUsername, HashPassword(HardcodedPassword), "Admin");
             return View();
         }
 

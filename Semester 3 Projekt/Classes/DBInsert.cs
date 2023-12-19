@@ -175,5 +175,12 @@ namespace Semester_3_Projekt.Classes
         {
             Queue queue = new Queue() { BatchId = BatchID };
         }
+
+        public void addUser (string username, string password, string role)
+        {
+            User user = new User() { Username = username, PasswordHash = password, Role = role};
+            BeerDB.Users.Add(user);
+            BeerDB.SaveChanges();
+        }
     }
 }

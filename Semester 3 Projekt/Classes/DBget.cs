@@ -53,7 +53,25 @@ namespace Semester_3_Projekt.Classes
 
         public User GetUserByUsername(string username)
         {
-            return beerDB.Users.FirstOrDefault(u => u.Username == username);
+            var user = beerDB.Users;
+            var query = 
+                from p in user
+                where p.Username == username
+                select new
+                {
+                    p.Id,
+                    p.Username,
+                    p.PasswordHash,
+                    p.Role
+                };
+            User user1 = new User()
+            {
+                Id = query.First().Id,
+                Username = query.First().Username,
+                PasswordHash = query.First().PasswordHash,
+                Role = query.First().Role
+            };
+            return user1;
         }
 
 

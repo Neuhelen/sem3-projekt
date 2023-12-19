@@ -61,38 +61,45 @@ namespace Semester_3_Projekt.Classes
                     switch (recipe.Product.pName)
                     {
                         case "Pilsen":
-                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 4;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 2;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 4;
                             break;
                         case "Wheat":
-                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 4;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 6;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 3;
                             break;
                         case "IPA":
-                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 4;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 5;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 4;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 1;
                             break;
                         case "Stout":
-                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 3;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 4;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 6;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 2;
                             break;
                         case "Ale":
-                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 0;
-                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 0;
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 4;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 6;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 2;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 2;
+                            if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 8;
+                            break;
+                        case "Alcohol Free":
+                            if (ingredient.Ingredient.iName == "Barley") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Hops") ingredient.Product.Amount = 1;
+                            if (ingredient.Ingredient.iName == "Malt") ingredient.Product.Amount = 4;
+                            if (ingredient.Ingredient.iName == "Wheat") ingredient.Product.Amount = 5;
                             if (ingredient.Ingredient.iName == "Yeast") ingredient.Product.Amount = 0;
                             break;
                     }

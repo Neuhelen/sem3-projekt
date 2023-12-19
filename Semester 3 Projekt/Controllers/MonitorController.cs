@@ -188,13 +188,11 @@ namespace Semester_3_Projekt.controller
                 double timeInTotal = timeDifference.TotalSeconds;
                 double successRate = successfulBeer / totalBeer;
                 double rateOfEfficiency = successRate / timeInTotal;
-                Debug.WriteLine(timeInTotal);
-                Debug.WriteLine(successRate);
-                Debug.WriteLine(rateOfEfficiency);
+                timeInTotal = timeInTotal / 60;
 
-                _dbInsert.addLog(batch_id, "timeInTotal", timeInTotal);
-                _dbInsert.addLog(batch_id, "successRate", successRate);
-                _dbInsert.addLog(batch_id, "rateOfEfficiency", rateOfEfficiency);
+                _dbInsert.addLog(batch_id, "Total time in min", timeInTotal);
+                _dbInsert.addLog(batch_id, "Success Rate", successRate);
+                _dbInsert.addLog(batch_id, "Rate of Efficiency", rateOfEfficiency);
             }
         }
     }

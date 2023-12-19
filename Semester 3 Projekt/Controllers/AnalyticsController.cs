@@ -52,8 +52,8 @@ namespace Semester_3_Projekt.Controllers
                         break;
 
                     case "Product":
-                        SearchID = BeerGet.getProductId(batchSearch.BatchSearchInput);
-                        BatchIds = BeerGet.getAllBatchId(SearchID);
+                            SearchID = BeerGet.getProductId(batchSearch.BatchSearchInput);
+                            BatchIds = BeerGet.getAllBatchId(SearchID);
                         break;
 
                     case "Date":
@@ -118,8 +118,69 @@ namespace Semester_3_Projekt.Controllers
                 }
             }
 
-            ViewBag.Batchlogs = batchlogs.OrderBy(b => b.Batch.Id).ToList();
+            ViewBag.BatchTables = CreateTableList(batchRows, batchlogs.OrderBy(b => b.Batch.Id).ToList());
+            //ViewBag.Batchlogs = batchlogs.OrderBy(b => b.Batch.Id).ToList();
             ViewBag.BatchRows = batchRows;
+        }
+
+        public List<BatchTable> CreateTableList (List<BatchRows> batchRows, List<Batchlog> batchlogs)
+        {
+            List<BatchTable> tableList = new List<BatchTable>();
+
+            BatchTable batchTable = new BatchTable();
+            batchTable.Row = 0;
+            foreach (BatchRows batchRows1 in batchRows)
+            {
+                BatchCol batchCol = new BatchCol();
+                batchCol.Col = batchRows1.Name;
+                batchCol.Value = batchRows1.Name;
+            }
+            tableList.Add(batchTable);
+
+            int rows = 0;
+            foreach (var batchlog in batchlogs)
+            {
+                rows++;
+                batchTable = new BatchTable();
+                batchTable.Row = rows;
+                List<BatchCol> colList = new List<BatchCol>();
+
+                foreach (BatchRows BRow in batchRows)
+                {
+                    BatchCol batchCol = new BatchCol();
+                    batchCol.Col = BRow.Name;
+                    if(BRow.Name == "Batch") batchCol.Value = batchlog.Batch.Id.ToString();
+                    else if (BRow.Name == "Product") batchCol.Value = batchlog.Product.pName;
+                    else if (BRow.Name == "Amount") batchCol.Value = batchlog.Batch.Quantity.ToString();
+                    else if (BRow.Name == "Date") batchCol.Value = batchlog.Batch.Date.ToString();
+                    else
+                    {
+                        Boolean Filled = false;
+                        foreach (Batch_Log log in batchlog.BatchLogs)
+                        {
+                            if (BRow.Name == log.Event_Type)
+                            {
+                                Filled = true;
+                                if (log.Value >= 0) batchCol.Value = "" + log.Value;
+                                else if (log.dValue >= 0)
+                                {
+                                    if(BRow.Name == "Success Rate") batchCol.Value = log.dValue+"%";
+                                    else batchCol.Value = "" + log.dValue;
+                                }
+                                //else if (log.Description != "") batchTable.Value = log.Description;
+                                else batchCol.Value = log.Time.ToString();
+                            }
+                        }
+                        if (Filled == false) batchCol.Value = "";
+                    }
+                    
+                    colList.Add(batchCol);
+                }
+
+                batchTable.BatchCols = colList;
+                tableList.Add(batchTable);
+            }
+            return tableList;
         }
 	}
 }

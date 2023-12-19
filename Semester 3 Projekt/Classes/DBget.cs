@@ -337,7 +337,8 @@ namespace Semester_3_Projekt.Classes
                     b.Time,
                     b.Event_Type,
                     b.Description,
-                    b.Value
+                    b.Value,
+                    b.dValue
                 };
 
             foreach ( var b in query )
@@ -377,6 +378,7 @@ namespace Semester_3_Projekt.Classes
                     l.Description,
                     l.BatchId,
                     l.Value,
+                    l.dValue,
                     b.Date,
                     b.Quantity,
                     b.ProductId,
@@ -421,6 +423,7 @@ namespace Semester_3_Projekt.Classes
                 _Log.Event_Type = q.Event_Type;
                 _Log.Description = q.Description;
                 _Log.Value = q.Value;
+                _Log.dValue = q.dValue;
                 log.BatchLogs.Add( _Log );
             }
 
@@ -447,6 +450,7 @@ namespace Semester_3_Projekt.Classes
                     l.Description,
                     l.BatchId,
                     l.Value,
+                    l.dValue,
                     b.Date,
                     b.Quantity,
                     b.ProductId,
@@ -484,6 +488,7 @@ namespace Semester_3_Projekt.Classes
                 _Log.Event_Type = q.Event_Type;
                 _Log.Description = q.Description;
                 _Log.Value = q.Value;
+                _Log.dValue = q.dValue;
                 log.BatchLogs.Add(_Log);
             }
 

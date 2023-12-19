@@ -30,53 +30,26 @@
 <div class="TableContainer">
     <table id="BatchTable">
         @{
-            List<Batchlog> batchlogs = ViewBag.Batchlogs;
+            List<BatchTable> tables = ViewBag.BatchTables;
+            List<BatchRows> BatchRows = ViewBag.BatchRows;
             <tr>
                 @{
-                    foreach (BatchRows Rows in ViewBag.BatchRows)
+                    foreach (BatchRows Rows in BatchRows)
                     {
                         <th class="BatchCells">@Rows.Name</th>
                     }
                 }
             </tr>
-            if (batchlogs.Count > 0)
+            foreach (BatchTable Rows in tables)
             {
-                foreach (Batchlog batchlog in batchlogs)
-                {
-                    <tr>
-                        @{
-                            <th class="BatchCells">@batchlog.Batch.Id</th>
-                            <th class="BatchCells">@batchlog.Product.pName</th>
-                            <th class="BatchCells">@batchlog.Batch.Quantity</th>
-                            <th class="BatchCells">@batchlog.Batch.Date</th>
-                            foreach (Batch_Log log in batchlog.BatchLogs)
-                            {
-                                foreach (BatchRows Rows in ViewBag.BatchRows)
-                                {
-                                    if (Rows.Name == log.Event_Type)
-                                    {
-                                        if (log.Value >= 0)
-                                        {
-                                            <th class="BatchCells">@log.Value</th>
-                                        }/*
-                                        else if (log.Description != null)
-                                        {
-                                            <th class="BatchCells">@log.Description</th>
-                                        }*/
-                                        else if (log.dValue != null)
-                                        {
-                                            <th class="BatchCells">@log.dValue</th>
-                                        }
-                                        else
-                                        {
-                                            <th class="BatchCells">@log.Time</th>
-                                        }
-                                    }
-                                }
-                            }
+                <tr>
+                    @{
+                        foreach (BatchCol col in Rows.BatchCols)
+                        {
+                            <th class="BatchCells">@col.Value</th>
                         }
-                    </tr>
-                }
+                    }
+                </tr>
             }
         }
     </table>

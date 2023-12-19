@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using Newtonsoft.Json;
 using NuGet.Protocol;
+using Org.BouncyCastle.Asn1;
 using Semester_3_Projekt.Classes;
 using Semester_3_Projekt.Models;
 using System.Diagnostics;
@@ -14,12 +15,14 @@ namespace Semester_3_Projekt.controller
         private BeerMachineAPI _beerMachineAPI;
         private DBget _dbGet;
         private MonitorViewModel md;
+        private DBInsert _dbInsert;
 
         public MonitorController()
         {
             _beerMachineAPI = BeerMachineAPI.Instance;
             _dbGet = new DBget();
             md = new MonitorViewModel();
+            _dbInsert = new DBInsert();
         }
         public IActionResult Index()
         {
@@ -123,6 +126,7 @@ namespace Semester_3_Projekt.controller
                 case "reset":
                     Debug.WriteLine("case reset works.");
                     _beerMachineAPI.logSuccess();
+                    CalculateEfficiencyRate(_beerMachineAPI.get_batch_id());
                     _beerMachineAPI.reset();
                     break;
                 case "start":
@@ -147,6 +151,54 @@ namespace Semester_3_Projekt.controller
             }
 
             return Json(new { success = true, message = "Action performed successfully" });
+        }
+        public void CalculateEfficiencyRate(int batch_id)
+        {
+            if (GetState() == "Complete")
+            {
+                Batchlog batchLog = _dbGet.CreateBatchAnalyticlog(batch_id);
+                TimeOnly timeStarted;
+                TimeOnly timeCompleted;
+                int totalBeer = 0;
+                int successfulBeer = 0;
+
+                foreach (var batchLogEvent in batchLog.BatchLogs)
+                {
+                    if (batchLogEvent.Event_Type == "Manual Start")
+                    {
+                        timeStarted = batchLogEvent.Time;
+                    }
+                    else if (batchLogEvent.Event_Type == "Total Beer")
+                    {
+                        timeCompleted = batchLogEvent.Time;
+                        totalBeer = (int)batchLogEvent.Value;
+                    }
+                    else if (batchLogEvent.Event_Type == "Successful Beer")
+                    {
+                        successfulBeer = (int)batchLogEvent.Value;
+                    }
+                }
+
+                TimeSpan timeDifference;
+                if (timeCompleted < timeStarted)
+                {
+                    timeDifference = timeCompleted - timeStarted;
+                    timeDifference = TimeSpan.FromHours(24) - timeDifference;
+                }
+                else
+                {
+                    timeDifference = timeCompleted - timeStarted;
+                }
+
+                double timeInTotal = timeDifference.TotalSeconds;
+                double successRate = successfulBeer / totalBeer;
+                double rateOfEfficiency = successRate / timeInTotal;
+                timeInTotal = timeInTotal / 60;
+
+                _dbInsert.addLog(batch_id, "Total time in min", timeInTotal);
+                _dbInsert.addLog(batch_id, "Success Rate", successRate);
+                _dbInsert.addLog(batch_id, "Rate of Efficiency", rateOfEfficiency);
+            }
         }
     }
 }

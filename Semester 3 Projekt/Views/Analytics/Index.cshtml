@@ -36,20 +36,23 @@
                 @{
                     foreach (BatchRows Rows in BatchRows)
                     {
-                        <th class="BatchCells">@Rows.Name</th>
+                        <th class="BatchCells" onclick="SortBatch(@Rows.Col)">@Rows.Name</th>
                     }
                 }
             </tr>
             foreach (BatchTable Rows in tables)
             {
-                <tr>
-                    @{
-                        foreach (BatchCol col in Rows.BatchCols)
-                        {
-                            <th class="BatchCells">@col.Value</th>
+                if(Rows.Row > 0)
+                {
+                    <tr>
+                        @{
+                            foreach (BatchCol col in Rows.BatchCols)
+                            {
+                                <td class="BatchCells">@col.Value</td>
+                            }
                         }
-                    }
-                </tr>
+                    </tr>
+                }
             }
         }
     </table>
@@ -63,6 +66,10 @@
         padding: 15px;
         background: #f9f9f9;
         border: 1px solid #ddd;
+    }
+
+    .TableContainer {
+        overflow: scroll;
     }
 
     .BatchCells, th {

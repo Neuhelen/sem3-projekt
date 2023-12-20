@@ -1,14 +1,45 @@
 ﻿function SortBatch(Coloumn) {
-    var BatchTable, Rows, ColSorting, i, row1, row2, Sort, Direction, Count;
+    let BatchTable, Rows, ColSorting, i, row1, row2, Count, Direction;
+
     Count = 0;
-    BatchTable = document.getElementById("BatchTable");
-    BatchTable.find('tr').sort(function (a, b) {
-        row1 = a.find('td:eq(' + Coloumn + ')').test();
-        row1 = b.find('td:eq(' + Coloumn + ')').test();
-    })
+    BatchTable = document.getElementById('BatchTable');
     ColSorting = true;
-    Direction = "Ascending";
-    Rows = BatchTable.rows;
+    Direction = 'ascending';
+
+    while (ColSorting) {
+        ColSorting = false;
+        Rows = BatchTable.rows;
+        var RowSwitch;
+        for (i = 1; i < Rows.length - 1; i++) {
+            RowSwitch = false;
+
+            row1 = Rows[i].getElementsByTagName('td')[Coloumn];
+            row2 = Rows[i + 1].getElementsByTagName('td')[Coloumn];
+
+            if (Direction == 'ascending') {
+                if (row1.innerHTML.toLowerCase() > row2.innerHTML.toLowerCase()) {
+                    RowSwitch = true;
+                    break;
+                }
+            }
+            else if (Direction == 'decending') {
+                if (row1.innerHTML.toLowerCase() < row2.innerHTML.toLowerCase()) {
+                    RowSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (RowSwitch) {
+            Rows[i].parentNode.innerBefore(Rows[i + 1], Rows[i]);
+            ColSorting = true;
+        }
+        else {
+            if (Count == 0 && Direction == 'ascending') {
+                Direction = 'decending';
+                ColSorting = true;
+            }
+        }
+    }
 }
 
 

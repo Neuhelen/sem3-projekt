@@ -1,10 +1,19 @@
 using Semester_3_Projekt.controller;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews(); // Changed from AddRazorPages() to AddControllersWithViews()
+
+// Cookie authentication services
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/Index"; // Redirect to login page if not authenticated
+    });
+
 builder.Services.AddDbContext<BeerDBConn>(options =>
 options.UseMySql(builder.Configuration.GetConnectionString("BeerDBConnectionString"), new MySqlServerVersion(new Version(8, 0, 4))));
 
@@ -23,11 +32,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Monitor}/{action=Index}"
-    );
+    // defalt route to login page
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

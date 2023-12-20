@@ -1,4 +1,4 @@
-﻿@*
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -15,6 +15,26 @@
 
 <div class="heroContainer">
 
+    @*Maintenance progress bar*@
+    <div class="maintenanceContainer">
+        <div class="maintenanceBar">
+            <div class="maintenanceProgress" style="width: 50%;"></div>
+        </div>
+        <span class="maintenanceText">Maintenance in progress...</span>
+    </div>
+
+    @*Alert popup for status*@
+    <div class="alertStatus">
+        <label for="status-alert">Status:</label>
+        <label name="statusAlert" id="statusAlert"></label>
+    </div>
+
+    @*Current Batch Display*@
+    <div class="currentBatchDisplay">
+        <label for="current-batch">Current Batch:</label>
+        <label name="currentBatch" id="currentBatch"></label>
+    </div>
+
     @*Dropdown for batch ID*@
     <div class="dropDownBatch">
         <label for="batch-id">Batch ID:</label>
@@ -27,7 +47,7 @@
     <div class="dropDownBatch" name="statusAlert"><label name="statusAlert" id="statusAlert">State: </label></div>
     @*Monitoring*@
     <div class="infoBoxes">
-        <div class="box"><label name="batchId" id="batchId">Batch id: </label></div>
+        <div class="box"><label name="batchId" id="batchId">Batch ID: </label></div>
         <div class="box"><label name="BeerType" id="beerType">Type: </label></div>
         <div class="box"><label name="producedProducts" id="producedProducts">Products Produced: </label></div>
         <div class="box"><label name="quantity" id="quantity">Quantity: </label></div>
@@ -54,7 +74,6 @@
     </div>
 
 </div>
-
 
 
 
@@ -100,8 +119,7 @@
 
         $(".startBtn").click(function () {
             button_actions("start");
-        });
-
+        }
         $(".stopBtn").click(function () {
             button_actions("stop");
         });
@@ -131,13 +149,11 @@
         });
     }
 
-    //This function enables and disables the buttons based on the Current State of the machine.
-    function updateButtonStates(state_current, batch_id) {
-        var resetBtn = $(".resetBtn");
-        var startBtn = $(".startBtn");
-        var stopBtn = $(".stopBtn");
-        var abortBtn = $(".abortBtn");
-        var clearBtn = $(".clearBtn");
+        //This function enables and disables the buttons based on the Current State of the machine.
+        function updateButtonStates(state_current, batch_id) {
+            var startBtn = $(".startBtn");
+            var stopBtn = $(".stopBtn");
+            var continueBtn = $(".continueBtn");
 
         //If the current state is "Stopped" or "Complete", 
         //then the Reset-button is enabled and the other buttons are disabled.

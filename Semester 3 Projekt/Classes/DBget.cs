@@ -51,6 +51,30 @@ namespace Semester_3_Projekt.Classes
             return queryProducts;
         }
 
+        public User GetUserByUsername(string username)
+        {
+            var user = beerDB.Users;
+            var query = 
+                from p in user
+                where p.Username == username
+                select new
+                {
+                    p.Id,
+                    p.Username,
+                    p.PasswordHash,
+                    p.Role
+                };
+            User user1 = new User()
+            {
+                Id = query.First().Id,
+                Username = query.First().Username,
+                PasswordHash = query.First().PasswordHash,
+                Role = query.First().Role
+            };
+            return user1;
+        }
+
+
         public int getProductId (string Name)
         {
             var product = beerDB.Products.Where(p => p.pName.Contains(Name)).ToList();

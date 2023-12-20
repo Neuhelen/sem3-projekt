@@ -11,8 +11,8 @@ using Semester_3_Projekt.controller;
 namespace Semester_3_Projekt.Migrations
 {
     [DbContext(typeof(BeerDBConn))]
-    [Migration("20231127224416_initialMigration")]
-    partial class initialMigration
+    [Migration("20231220113221_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,9 @@ namespace Semester_3_Projekt.Migrations
 
                     b.Property<int?>("Value")
                         .HasColumnType("int");
+
+                    b.Property<double?>("dValue")
+                        .HasColumnType("double");
 
                     b.HasKey("Id");
 
@@ -161,15 +164,15 @@ namespace Semester_3_Projekt.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("longtext");
 

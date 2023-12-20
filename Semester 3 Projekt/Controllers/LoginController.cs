@@ -26,7 +26,9 @@ namespace Semester_3_Projekt.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //dBInsert.addUser(HardcodedUsername, HashPassword(HardcodedPassword), "Admin");
+           /* dBInsert.addUser(HardcodedUsername, HashPassword(HardcodedPassword), "Admin");
+            AddDefaultValues addDefaultValues = new AddDefaultValues();
+            addDefaultValues.SetDefaultValues();*/
             return View();
         }
 

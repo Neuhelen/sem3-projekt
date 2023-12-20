@@ -13,9 +13,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Login/Index"; // Redirect to login page if not authenticated
     });
-
+var connectionstring = builder.Configuration.GetConnectionString("LocalBeerDBConnectionString");
 builder.Services.AddDbContext<BeerDBConn>(options =>
-options.UseMySql(builder.Configuration.GetConnectionString("BeerDBConnectionString"), new MySqlServerVersion(new Version(8, 0, 4))));
+options.UseMySql(connectionstring, ServerVersion.AutoDetect(connectionstring)));
 
 var app = builder.Build();
 

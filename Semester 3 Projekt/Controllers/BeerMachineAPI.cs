@@ -18,6 +18,8 @@ namespace Semester_3_Projekt.controller
                 }
         }
         // Connection variables
+        
+        //String connection_string = "opc.tcp://192.168.0.122:4840/";
         String connection_string = "opc.tcp://localhost:4840/";
         OpcClient client = null;
 

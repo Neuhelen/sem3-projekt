@@ -44,7 +44,7 @@
             <option value="3">3</option>
         </select>
     </div>
-    <div class="dropDownBatch" name="statusAlert"><label name="statusAlert" id="statusAlert">State: </label></div>
+    
     @*Monitoring*@
     <div class="infoBoxes">
         <div class="box"><label name="batchId" id="batchId">Batch ID: </label></div>
@@ -101,7 +101,7 @@
                 document.getElementById("maltAmount").innerHTML = "Malt Amount: " + response["value"]["maltAmount"];
                 document.getElementById("wheatAmount").innerHTML = "Wheat Amount: " + response["value"]["wheatAmount"];
                 document.getElementById("yeastAmount").innerHTML = "Yeast Amount: " + response["value"]["yeastAmount"];
-                document.getElementById("statusAlert").innerHTML = "Status: " + response["value"]["state"]
+                document.getElementById("statusAlert").innerHTML = response["value"]["state"]
                 document.getElementById("stopReason").innerHTML = "Stop Reason: " + response["value"]["stopReason"]
                 updateButtonStates(response["value"]["state"], response["value"]["batchID"]);
                 setTimeout(monitor_update, 5000);
@@ -119,7 +119,7 @@
 
         $(".startBtn").click(function () {
             button_actions("start");
-        }
+        });
         $(".stopBtn").click(function () {
             button_actions("stop");
         });
@@ -153,7 +153,9 @@
         function updateButtonStates(state_current, batch_id) {
             var startBtn = $(".startBtn");
             var stopBtn = $(".stopBtn");
-            var continueBtn = $(".continueBtn");
+            var clearBtn = $(".clearBtn");
+            var resetBtn = $(".resetBtn");
+            var abortBtn = $(".abortBtn");
 
         //If the current state is "Stopped" or "Complete", 
         //then the Reset-button is enabled and the other buttons are disabled.

@@ -165,8 +165,7 @@ namespace Semester_3_Projekt.Controllers
                                 if (log.Value >= 0) batchCol.Value = "" + log.Value;
                                 else if (log.dValue >= 0)
                                 {
-                                    if(BRow.Name == "Success Rate") batchCol.Value = log.dValue+"%";
-                                    else batchCol.Value = log.dValue.ToString();
+                                    batchCol.Value = log.dValue.ToString();
                                 }
                                 //else if (log.Description != "") batchTable.Value = log.Description;
                                 else batchCol.Value = log.Time.ToString();

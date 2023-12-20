@@ -13,7 +13,7 @@ namespace Semester_3_Projekt.Classes
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var connectionstring = configuration.GetConnectionString("LocalBeerDBConnectionString");
+            var connectionstring = configuration.GetConnectionString("BeerDBConnectionString");
 
             return new DbContextOptionsBuilder<BeerDBConn>()
                 .UseMySql(connectionstring, ServerVersion.AutoDetect(connectionstring)).Options;
